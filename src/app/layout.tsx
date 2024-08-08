@@ -6,6 +6,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import AppProvider from "./app-provider";
+import Header from "../../shared/components/layouts/Header";
+import MainLayout from "../../shared/components/layouts/MainLayout";
 
 const queryClient = new QueryClient()
 
@@ -19,7 +21,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <QueryClientProvider client={queryClient}>
           <AppProvider>
-            {children}
+            {/* <Header></Header> */}
+            <MainLayout>
+              {children}
+            </MainLayout>
           </AppProvider>
         </QueryClientProvider>
       </body>

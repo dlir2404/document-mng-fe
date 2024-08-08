@@ -7,12 +7,14 @@ import { useRouter } from "next/router"
 
 const AppContext = createContext<{
     user: any
+    token: any
     setUser: (user: any) => void
     setToken: (token: string) => void
     getProfile: (token: string) => void
 }>({
     user: null,
     setUser: () => { },
+    token: null,
     setToken: () => { },
     getProfile: () => { }
 })
@@ -61,6 +63,7 @@ export default function AppProvider({
         <AppContext.Provider
             value={{
                 user,
+                token,
                 setUser,
                 setToken,
                 getProfile

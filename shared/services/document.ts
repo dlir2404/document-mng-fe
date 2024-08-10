@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { BASE_URL } from "../constants/baseUrl";
 import axios from "axios";
 
@@ -9,6 +9,21 @@ export interface IDocumentParams {
     pageSize?: number;
     from?: string;
     to?: string;
+}
+
+export interface IUploadIncomeBody {
+    file: any;
+    originalNumber?: string;
+    number?: string;
+    arrivalDate?: string;
+    signDate?: string;
+    signer?: string;
+    sendFrom?: string;
+    sendTo?: string;
+    thematic?: string;
+    category?: string;
+    abstract?: string;
+    token?: string;
 }
 
 export const useGetListDocument = (params: IDocumentParams, token: string) => {
@@ -32,6 +47,27 @@ export const useGetListDocument = (params: IDocumentParams, token: string) => {
             })
 
             return result.data
+        }
+    })
+}
+
+export const useUploadIncomeDocument = (okFn?: Function, errFn?: Function) => {
+    return useMutation({
+        mutationFn: async (body: IUploadIncomeBody) => {
+            console.log(body.token)
+            return await axios.post(BASE_URL + '/income/upload', body, {
+                headers: {
+                    'Authorization': 'Bearer ' + body.token,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        },
+        onSuccess: (data: any) => {
+            okFn && okFn()
+        },
+        onError: (error: any) => {
+            errFn && errFn(error.response?.data?.message || "Có lỗi xảy ra")
+            console.log(error)
         }
     })
 }

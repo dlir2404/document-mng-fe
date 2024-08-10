@@ -3,7 +3,6 @@ import { notification } from "antd"
 import { createContext, useContext, useEffect, useState } from "react"
 import { clientAccessToken, CookieKeys } from "../../shared/constants/cookie"
 import { getMe } from "../../shared/services/user"
-import { useRouter } from "next/router"
 
 const AppContext = createContext<{
     user: any
@@ -56,6 +55,7 @@ export default function AppProvider({
     useEffect(() => {
         if (clientAccessToken.value) {
             getProfile(clientAccessToken.value).then()
+            setToken(clientAccessToken.value)
         }
     }, [token])
 

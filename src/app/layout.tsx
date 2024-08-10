@@ -21,7 +21,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <QueryClientProvider client={queryClient}>
           <AppProvider>
-            {/* <Header></Header> */}
             <MainLayout>
               {children}
             </MainLayout>

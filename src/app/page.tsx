@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useAppContext } from "./app-provider";
 import { CookieKeys } from "../../shared/constants/cookie";
 import { useRouter } from "next/navigation";
-import { notification, Radio, Table } from "antd";
+import { Button, notification, Radio, Table } from "antd";
 import { useTabsContext } from "../../shared/components/layouts/MainLayout";
 import { OPTIONS } from "../../shared/constants/tabs";
 import { useGetListDocument } from "../../shared/services/document";
@@ -12,11 +12,13 @@ import { formatDate } from "../../shared/utils/formatDate";
 import Link from "next/link";
 import { handlePdfLink } from "../../shared/utils/handlePdfLink";
 import Image from "next/image";
+import UploadIncomeModal from "../../shared/components/modals/upload-income-modal";
 
 export default function Home() {
   const router = useRouter()
   const appContext = useAppContext()
   const tabsContext = useTabsContext()
+  const [isIncomeModalOpen, setIsIncomeModalOpen] = useState(false)
   const [status, setStatus] = useState<string[] | undefined>()
 
   useEffect(() => {
@@ -49,8 +51,6 @@ export default function Home() {
     type: tabsContext.tabKey,
     status: status
   }, appContext.token)
-
-  console.log(data)
 
   const columns = [
     {
@@ -104,7 +104,7 @@ export default function Home() {
         if (value && value !== "") {
           return (
             <Link target="_blank" href={handlePdfLink(value)}>
-                <Image width={24} height={24} alt="pdf" src="/pdf-icon.png"/>
+              <Image width={24} height={24} alt="pdf" src="/pdf-icon.png" />
             </Link>
           )
         }
@@ -119,7 +119,7 @@ export default function Home() {
         if (value && value !== "") {
           return (
             <Link target="_blank" href={handlePdfLink(value)}>
-                <Image width={24} height={24} alt="pdf" src="/pdf-icon.png"/>
+              <Image width={24} height={24} alt="pdf" src="/pdf-icon.png" />
             </Link>
           )
         }
@@ -129,21 +129,25 @@ export default function Home() {
   ];
 
   return (
-    <div>
-      <Radio.Group
-        options={options}
-        onChange={handleChangeTab}
-        // value={value4}
-        optionType="button"
-        buttonStyle="solid"
-        className="mb-4"
-      />
-      <Table
-        loading={isLoading}
-        columns={columns}
-        bordered
-        dataSource={data?.rows.map((row: any, index: number) => { return { key: index + 1, ...row } }) || []}
-      />
-    </div>
+    <>
+      <div>
+        <Button className="mr-4" onClick={() => setIsIncomeModalOpen(true)}>Upload</Button>
+        <Radio.Group
+          options={options}
+          onChange={handleChangeTab}
+          // value={value4}
+          optionType="button"
+          buttonStyle="solid"
+          className="mb-4"
+        />
+        <Table
+          loading={isLoading}
+          columns={columns}
+          bordered
+          dataSource={data?.rows.map((row: any, index: number) => { return { key: index + 1, ...row } }) || []}
+        />
+      </div>
+      <UploadIncomeModal onOk={() => { refetch() }} isOpen={isIncomeModalOpen} setIsOpen={setIsIncomeModalOpen}></UploadIncomeModal>
+    </>
   );
 }

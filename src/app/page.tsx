@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { useAppContext } from "./app-provider";
 import { CookieKeys } from "../../shared/constants/cookie";
 import { useRouter } from "next/navigation";
-import { Button, notification, Radio, Table } from "antd";
+import { Button, notification, Radio, Table, Tag } from "antd";
 import { useTabsContext } from "../../shared/components/layouts/MainLayout";
-import { OPTIONS } from "../../shared/constants/tabs";
+import { DOCUMENT_STATUS, OPTIONS } from "../../shared/constants/tabs";
 import { useGetListDocument } from "../../shared/services/document";
 import { incomeAttribute } from "../../shared/constants/attribute";
 import { formatDate } from "../../shared/utils/formatDate";
@@ -13,6 +13,16 @@ import Link from "next/link";
 import { handlePdfLink } from "../../shared/utils/handlePdfLink";
 import Image from "next/image";
 import UploadIncomeModal from "../../shared/components/modals/upload-income-modal";
+
+const exchangeRoleName = (role: number): string => {
+  switch (role) {
+    case 1: return 'ADMIN';
+    case 2: return 'LEADER';
+    case 3: return 'SPECIALIST';
+    case 4: return 'OFFICE_CLERK';
+    default: return 'SPECIALIST';
+  }
+}
 
 export default function Home() {
   const router = useRouter()
@@ -30,8 +40,8 @@ export default function Home() {
     }
   }, [])
 
-  const handleChangeTab = () => {
-
+  const handleChangeTab = (event: any) => {
+    setStatus(event.target.value)
   }
 
   let options: any[] = []
@@ -79,6 +89,14 @@ export default function Home() {
       title: incomeAttribute['abstract'],
       dataIndex: 'abstract',
       key: 'abstract',
+    },
+    {
+      title: incomeAttribute['status'],
+      dataIndex: 'status',
+      key: 'status',
+      render: (value: string) => {
+        return <Tag color={DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].INCOME[value].color}>{DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].INCOME[value].status}</Tag>
+      }
     },
     {
       title: incomeAttribute['sendFrom'],
@@ -135,7 +153,7 @@ export default function Home() {
         <Radio.Group
           options={options}
           onChange={handleChangeTab}
-          // value={value4}
+          value={status}
           optionType="button"
           buttonStyle="solid"
           className="mb-4"

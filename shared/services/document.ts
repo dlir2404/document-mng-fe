@@ -34,6 +34,14 @@ export interface IPresentToLeader {
     token?: string;
 }
 
+export interface IRequestProcessIncome {
+    specialistId?: number;
+    documentId?: number;
+    processDirection?: string;
+    deadline?: string;
+    token?: string;
+}
+
 export const useGetListDocument = (params: IDocumentParams, token: string) => {
     return useQuery({
         queryKey: ['document', params],
@@ -92,6 +100,30 @@ export const usePresentToLeader = (okFn?: Function, errFn?: Function) => {
         onSuccess: (data: any) => {
             notification.success({
                 message: 'Trình lãnh đạo thành công'
+            })
+            okFn && okFn(data)
+        },
+        onError: (error: any) => {
+            errFn && errFn()
+            notification.error({
+                message: error.message || "Có lỗi xảy ra"
+            })
+        }
+    })
+}
+
+export const useRequestProcessIncome = (okFn?: Function, errFn?: Function) => {
+    return useMutation({
+        mutationFn: async(body: IRequestProcessIncome) => {
+            return await axios.post(BASE_URL + '/income/request-process',  body, {
+                headers: {
+                    "Authorization": 'Bearer ' + body.token
+                }
+            })
+        },
+        onSuccess: (data: any) => {
+            notification.success({
+                message: 'Yêu cầu giải quyết thành công'
             })
             okFn && okFn(data)
         },

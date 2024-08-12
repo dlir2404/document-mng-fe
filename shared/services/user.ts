@@ -42,10 +42,27 @@ export const useGetProfile = (token: string, onOk?: Function, onError?: Function
     })
 }
 
-export const useGetUserByRole = (onOk?: Function, onError?: Function) => {
+export const useGetUserByRole = (role: number) => {
     return useQuery({
         queryKey: ['get_user_by_key'],
-        queryFn: async () =>  await axios.get(BASE_URL + '/user/leader/all'),
+        queryFn: async () =>  await axios.get(BASE_URL + `/user/all?role=${role}`),
+        onSuccess: (data) => {
+            return data.data.data
+        }
+    })
+}
+
+export const useGetListSpecialist = (roomId?: number) => {
+    return useQuery({
+        queryKey: ['get_specialists', roomId],
+        queryFn: async () =>  {
+            let endpoint = BASE_URL + '/user/all?role=3'
+
+            if (roomId) {
+                endpoint += `&roomId=${roomId}`
+            }
+            return await axios.get(endpoint)
+        },
         onSuccess: (data) => {
             return data.data.data
         }

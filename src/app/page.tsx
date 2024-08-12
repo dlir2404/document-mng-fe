@@ -15,6 +15,7 @@ import Image from "next/image";
 import UploadIncomeModal from "../../shared/components/modals/upload-income-modal";
 import { useGetProfile } from "../../shared/services/user";
 import PresentToLeaderModal from "../../shared/components/modals/present-to-leader";
+import RequestProcessIncome from "../../shared/components/modals/request-process-income";
 
 const exchangeRoleName = (role: number): string => {
   switch (role) {
@@ -35,6 +36,7 @@ export default function Home() {
   const [documentId, setDocumentId] = useState()
   const [isIncomeModalOpen, setIsIncomeModalOpen] = useState(false)
   const [isPresentModalOpen, setIsPresentModalOpen] = useState(false)
+  const [isRequestProccessIncome, setIsRequestProccessIncome] = useState(false)
   const [status, setStatus] = useState<string[] | undefined>()
 
   useGetProfile(appContext.token, (user: any) => {
@@ -55,7 +57,10 @@ export default function Home() {
       case 2: //leader
         if (status === 'PRESENTED_TO_LEADER') {
           return (
-            <Button>Giao xử lý</Button>
+            <Button onClick={() => {
+              setDocumentId(record.id)
+              setIsRequestProccessIncome(true)
+            }}>Giao xử lý</Button>
           )
         }
         if (status === 'WAITING_FOR_APPROVING_DRAFT') {
@@ -232,6 +237,7 @@ export default function Home() {
       </div>
       <UploadIncomeModal onOk={() => { refetch() }} isOpen={isIncomeModalOpen} setIsOpen={setIsIncomeModalOpen}></UploadIncomeModal>
       <PresentToLeaderModal documentId={documentId} onOk={() => { refetch() }} isOpen={isPresentModalOpen} setIsOpen={setIsPresentModalOpen}></PresentToLeaderModal>
+      <RequestProcessIncome  documentId={documentId} onOk={() => { refetch() }} isOpen={isRequestProccessIncome} setIsOpen={setIsRequestProccessIncome}></RequestProcessIncome>
     </>
   );
 }

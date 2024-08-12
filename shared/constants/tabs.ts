@@ -95,7 +95,30 @@ export const DOCUMENT_STATUS: { [key: string]: any } = {
             }
         },
         GOING: {
-
+            WAITING_FOR_ASSIGNMENT: {
+                status: 'Chờ giao giải quyết',
+                color: 'warning'
+            },
+            ASSIGNMENT_FOR_PROCESS: {
+                status: 'Đã giao giải quyết',
+                color: 'lime'
+            },
+            PROCESSING: {
+                status: 'Đã giao giải quyết',
+                color: 'lime'
+            },
+            WAITING_FOR_APPROVE: {
+                status: 'Chờ phê duyệt',
+                color: 'orange'
+            },
+            APPROVED: {
+                status: 'Đã phê duyệt',
+                color: 'success'
+            },
+            PUBLISHED: {
+                status: 'Đã phê duyệt',
+                color: 'success'
+            }
         }
     },
     SPECIALIST: {
@@ -126,7 +149,30 @@ export const DOCUMENT_STATUS: { [key: string]: any } = {
             }
         },
         GOING: {
-
+            WAITING_FOR_ASSIGNMENT: {
+                status: 'Chờ giao giải quyết',
+                color: 'default'
+            },
+            ASSIGNMENT_FOR_PROCESS: {
+                status: 'Chờ tiếp nhận',
+                color: 'warning'
+            },
+            PROCESSING: {
+                status: 'Đang giải quyết',
+                color: 'processing'
+            },
+            WAITING_FOR_APPROVE: {
+                status: 'Đã giải quyết',
+                color: 'success'
+            },
+            APPROVED: {
+                status: 'Đã giải quyết',
+                color: 'success'
+            },
+            PUBLISHED: {
+                status: 'Đã giải quyết',
+                color: 'success'
+            }
         }
     },
     OFFICE_CLERK: {
@@ -157,7 +203,30 @@ export const DOCUMENT_STATUS: { [key: string]: any } = {
             }
         },
         GOING: {
-
+            WAITING_FOR_ASSIGNMENT: {
+                status: 'Chờ giao giải quyết',
+                color: 'default'
+            },
+            ASSIGNMENT_FOR_PROCESS: {
+                status: 'Chờ tiếp nhận',
+                color: 'orange'
+            },
+            PROCESSING: {
+                status: 'Đang giải quyết',
+                color: 'processing'
+            },
+            WAITING_FOR_APPROVE: {
+                status: 'Chờ tiếp nhận',
+                color: 'lime'
+            },
+            APPROVED: {
+                status: 'Chờ phát hành',
+                color: 'warning'
+            },
+            PUBLISHED: {
+                status: 'Đã phát hành',
+                color: 'success'
+            }
         }
     }
 }

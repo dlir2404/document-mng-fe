@@ -17,3 +17,23 @@ export const incomeAttribute = {
     "incomeUrl": "File văn bản đến",
     "draftUrl": "File dự thảo",
 }
+
+export const goingAttribute = {
+    "id": "ID",
+    "number": "Số văn bản đi",
+    "signDate": "Ngày ký",
+    "signer": "Người ký",
+    "sendFrom": "Nơi gửi",
+    "sendTo": "Nơi nhận",
+    "emergencyLevel": "Độ khẩn",
+    "thematic": "Chuyên đề",
+    "leader": "Lãnh đạo giao việc",
+    "mainProcessor": "Chủ trì xử lý",
+    "collaborators": "Phối hợp giải quyết",
+    "category": "Thể loại",
+    "abstract": "Trích yếu",
+    "abstractDraft": "Trích yếu dự thảo",
+    "status": "Trạng thái",
+    "goingUrl": "File văn bản đi",
+    "draftUrl": "File dự thảo",
+}

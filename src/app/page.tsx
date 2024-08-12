@@ -7,7 +7,7 @@ import { Button, notification, Radio, Table, Tag } from "antd";
 import { useTabsContext } from "../../shared/components/layouts/MainLayout";
 import { DOCUMENT_STATUS, OPTIONS } from "../../shared/constants/tabs";
 import { useGetListDocument } from "../../shared/services/document";
-import { incomeAttribute } from "../../shared/constants/attribute";
+import { goingAttribute, incomeAttribute } from "../../shared/constants/attribute";
 import { formatDate } from "../../shared/utils/formatDate";
 import Link from "next/link";
 import { handlePdfLink } from "../../shared/utils/handlePdfLink";
@@ -169,7 +169,7 @@ export default function Home() {
     status: status
   }, appContext.token)
 
-  const columns = [
+  const columnsIncome = [
     {
       title: incomeAttribute['id'],
       dataIndex: 'id',
@@ -261,6 +261,92 @@ export default function Home() {
     },
   ];
 
+  const columnsGoing = [
+    {
+      title: goingAttribute['id'],
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: goingAttribute['number'],
+      dataIndex: 'number',
+      key: 'number',
+    },
+    {
+      title: goingAttribute['signDate'],
+      dataIndex: 'signDate',
+      key: 'signDate',
+      render: (value: string) => <p>{formatDate(value)}</p>
+    },
+    {
+      title: goingAttribute['abstract'],
+      dataIndex: 'abstract',
+      key: 'abstract',
+    },
+    {
+      title: goingAttribute['status'],
+      dataIndex: 'status',
+      key: 'status',
+      render: (value: string) => {
+        return <Tag color={DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].GOING[value].color}>{DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].GOING[value].status}</Tag>
+      }
+    },
+    {
+      title: goingAttribute['sendFrom'],
+      dataIndex: 'sendFrom',
+      key: 'sendFrom',
+    },
+    {
+      title: goingAttribute['mainProcessor'],
+      dataIndex: 'mainProcessor',
+      key: 'mainProcessor',
+      render: (value: any) => <p>{value?.username}</p>
+    },
+    {
+      title: 'Phối hợp xử lý',
+      // dataIndex: 'arrivalDate',
+      // key: 'arrivalDate',
+    },
+    {
+      title: 'Hành động',
+      dataIndex: 'status',
+      key: 'action',
+      render: (status: string, record: any) => {
+        return handleShowAction(status, appContext.user?.role, record)
+      }
+    },
+    {
+      title: goingAttribute['draftUrl'],
+      dataIndex: 'draftUrl',
+      key: 'draftUrl',
+      render: (value: any) => {
+        if (value && value !== "") {
+          return (
+            <Link target="_blank" href={handlePdfLink(value)}>
+              <Image width={24} height={24} alt="pdf" src="/pdf-icon.png" />
+            </Link>
+          )
+        }
+        return ''
+      }
+    },
+    {
+      title: goingAttribute['goingUrl'],
+      dataIndex: 'goingUrl',
+      key: 'goingUrl',
+      render: (value: any) => {
+        if (value && value !== "") {
+          return (
+            <Link target="_blank" href={handlePdfLink(value)}>
+              <Image width={24} height={24} alt="pdf" src="/pdf-icon.png" />
+            </Link>
+          )
+        }
+        return ''
+      }
+    },
+  ]
+
   return (
     <>
       <div>
@@ -275,7 +361,7 @@ export default function Home() {
         />
         <Table
           loading={isLoading}
-          columns={columns}
+          columns={tabsContext.tabKey === 'income-document' ? columnsIncome : tabsContext.tabKey === 'going-document' ? columnsGoing : []}
           bordered
           dataSource={data?.rows.map((row: any, index: number) => { return { key: index + 1, ...row } }) || []}
         />

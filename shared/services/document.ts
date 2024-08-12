@@ -35,10 +35,14 @@ export interface IPresentToLeader {
 }
 
 export interface IRequestProcessIncome {
-    specialistId?: number;
     documentId?: number;
     processDirection?: string;
     deadline?: string;
+    token?: string;
+}
+
+export interface IAcceptProcessIncome {
+    documentId?: number;
     token?: string;
 }
 
@@ -124,6 +128,30 @@ export const useRequestProcessIncome = (okFn?: Function, errFn?: Function) => {
         onSuccess: (data: any) => {
             notification.success({
                 message: 'Yêu cầu giải quyết thành công'
+            })
+            okFn && okFn(data)
+        },
+        onError: (error: any) => {
+            errFn && errFn()
+            notification.error({
+                message: error.message || "Có lỗi xảy ra"
+            })
+        }
+    })
+}
+
+export const useAcceptProcessIncome = (okFn?: Function, errFn?: Function) => {
+    return useMutation({
+        mutationFn: async(body: IAcceptProcessIncome) => {
+            return await axios.post(BASE_URL + '/income/request-process/accept',  body, {
+                headers: {
+                    "Authorization": 'Bearer ' + body.token
+                }
+            })
+        },
+        onSuccess: (data: any) => {
+            notification.success({
+                message: 'Đã chấp nhận yêu cầu giải quyết'
             })
             okFn && okFn(data)
         },

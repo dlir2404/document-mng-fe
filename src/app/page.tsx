@@ -16,6 +16,7 @@ import UploadIncomeModal from "../../shared/components/modals/upload-income-moda
 import { useGetProfile } from "../../shared/services/user";
 import PresentToLeaderModal from "../../shared/components/modals/present-to-leader";
 import RequestProcessIncome from "../../shared/components/modals/request-process-income";
+import AcceptProcessIncome from "../../shared/components/modals/accept-process-income";
 
 const exchangeRoleName = (role: number): string => {
   switch (role) {
@@ -37,6 +38,7 @@ export default function Home() {
   const [isIncomeModalOpen, setIsIncomeModalOpen] = useState(false)
   const [isPresentModalOpen, setIsPresentModalOpen] = useState(false)
   const [isRequestProccessIncome, setIsRequestProccessIncome] = useState(false)
+  const [isAcceptProccessIncome, setIsAcceptProccessIncome] = useState(false)
   const [status, setStatus] = useState<string[] | undefined>()
 
   useGetProfile(appContext.token, (user: any) => {
@@ -76,7 +78,12 @@ export default function Home() {
         if (status === 'ASSIGNED_FOR_PROCESS') {
           return (
             <div>
-              <Button className="mb-4 mr-4">Tiếp nhận</Button>
+              <Button type="primary" className="mb-4 mr-4"
+                onClick={() => {
+                  setDocumentId(record.id)
+                  setIsAcceptProccessIncome(true)
+                }}
+              >Tiếp nhận</Button>
               <Button>Trả lại lãnh đạo</Button>
             </div>
           )
@@ -91,12 +98,12 @@ export default function Home() {
         if (status === 'WAITING_FOR_PRESENTING_TO_LEADER') {
           return (
             <div>
-              <Button 
-              onClick={() => {
-                setIsPresentModalOpen(true)
-                setDocumentId(record.id)
-              }} 
-              className="mb-4 mr-4"
+              <Button
+                onClick={() => {
+                  setIsPresentModalOpen(true)
+                  setDocumentId(record.id)
+                }}
+                className="mb-4 mr-4"
               >Trình lãnh đạo</Button>
               <Button>Xóa văn bản</Button>
             </div>
@@ -237,7 +244,8 @@ export default function Home() {
       </div>
       <UploadIncomeModal onOk={() => { refetch() }} isOpen={isIncomeModalOpen} setIsOpen={setIsIncomeModalOpen}></UploadIncomeModal>
       <PresentToLeaderModal documentId={documentId} onOk={() => { refetch() }} isOpen={isPresentModalOpen} setIsOpen={setIsPresentModalOpen}></PresentToLeaderModal>
-      <RequestProcessIncome  documentId={documentId} onOk={() => { refetch() }} isOpen={isRequestProccessIncome} setIsOpen={setIsRequestProccessIncome}></RequestProcessIncome>
+      <RequestProcessIncome documentId={documentId} onOk={() => { refetch() }} isOpen={isRequestProccessIncome} setIsOpen={setIsRequestProccessIncome}></RequestProcessIncome>
+      <AcceptProcessIncome documentId={documentId} onOk={() => { refetch() }} isOpen={isAcceptProccessIncome} setIsOpen={setIsAcceptProccessIncome}></AcceptProcessIncome>
     </>
   );
 }

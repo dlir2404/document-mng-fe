@@ -19,6 +19,7 @@ import RequestProcessIncome from "../../shared/components/modals/request-process
 import AcceptProcessIncome from "../../shared/components/modals/accept-process-income";
 import DenyProcessIncome from "../../shared/components/modals/deny-process-income";
 import CompleteProcess from "../../shared/components/modals/complete-process";
+import DeleteIncome from "../../shared/components/modals/delete-income";
 
 const exchangeRoleName = (role: number): string => {
   switch (role) {
@@ -43,6 +44,7 @@ export default function Home() {
   const [isAcceptProccessIncome, setIsAcceptProccessIncome] = useState(false)
   const [isDenyProccessIncome, setIsDenyProccessIncome] = useState(false)
   const [isCompleteProccessIncome, setIsCompleteProccessIncome] = useState(false)
+  const [isDeleteProccessIncome, setIsDeleteProccessIncome] = useState(false)
   const [status, setStatus] = useState<string[] | undefined>()
 
   useGetProfile(appContext.token, (user: any) => {
@@ -120,7 +122,12 @@ export default function Home() {
                 }}
                 className="mb-4 mr-4"
               >Trình lãnh đạo</Button>
-              <Button>Xóa văn bản</Button>
+              <Button danger
+                onClick={() => {
+                  setDocumentId(record.id)
+                  setIsDeleteProccessIncome(true)
+                }}
+              >Xóa văn bản</Button>
             </div>
           )
         }
@@ -263,7 +270,7 @@ export default function Home() {
       <AcceptProcessIncome documentId={documentId} onOk={() => { refetch() }} isOpen={isAcceptProccessIncome} setIsOpen={setIsAcceptProccessIncome}></AcceptProcessIncome>
       <DenyProcessIncome documentId={documentId} onOk={() => { refetch() }} isOpen={isDenyProccessIncome} setIsOpen={setIsDenyProccessIncome}></DenyProcessIncome>
       <CompleteProcess documentId={documentId} onOk={() => { refetch() }} isOpen={isCompleteProccessIncome} setIsOpen={setIsCompleteProccessIncome}></CompleteProcess>
-
+      <DeleteIncome documentId={documentId} onOk={() => { refetch() }} isOpen={isDeleteProccessIncome} setIsOpen={setIsDeleteProccessIncome}></DeleteIncome>
     </>
   );
 }

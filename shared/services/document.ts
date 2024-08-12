@@ -53,6 +53,11 @@ export interface IAcceptProcessIncome {
     token?: string;
 }
 
+export interface IDeleteIncome {
+    documentId?: number;
+    token?: string;
+}
+
 export interface IDenyProcessIncome {
     documentId?: number;
     returnReason?: string;
@@ -165,6 +170,30 @@ export const useAcceptProcessIncome = (okFn?: Function, errFn?: Function) => {
         onSuccess: (data: any) => {
             notification.success({
                 message: 'Đã chấp nhận yêu cầu giải quyết'
+            })
+            okFn && okFn(data)
+        },
+        onError: (error: any) => {
+            errFn && errFn()
+            notification.error({
+                message: error.message || "Có lỗi xảy ra"
+            })
+        }
+    })
+}
+
+export const useDeleteIncome = (okFn?: Function, errFn?: Function) => {
+    return useMutation({
+        mutationFn: async(body: IDeleteIncome) => {
+            return await axios.delete(BASE_URL + `/income/${body.documentId}`, {
+                headers: {
+                    "Authorization": 'Bearer ' + body.token
+                }
+            })
+        },
+        onSuccess: (data: any) => {
+            notification.success({
+                message: 'Xóa văn bản thành công'
             })
             okFn && okFn(data)
         },

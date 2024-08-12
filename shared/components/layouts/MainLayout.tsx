@@ -55,10 +55,10 @@ export default function MainLayout({
                         key: 'logout',
                         label: 'Đăng xuất',
                         onClick: () => {
+                            router.push('/login')
                             appContext.setUser(null)
                             appContext.setToken('')
                             localStorage.removeItem(CookieKeys.accessToken)
-                            router.push('/login')
                             notification.success({
                                 message: "Đăng xuất thành công"
                             })

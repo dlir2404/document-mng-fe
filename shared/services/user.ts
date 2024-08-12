@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useMutation } from "react-query"
+import { useMutation, useQuery } from "react-query"
 import { BASE_URL } from "../constants/baseUrl"
 import { notification } from "antd"
 
@@ -20,10 +20,24 @@ export const useLogin = (okFn?: Function, errFn?: Function) => {
     })
 }
 
-export const getMe = (accessToken: string) => {
-    return axios.get(BASE_URL + '/auth/me', {
-        headers: {
-            "Authorization": "Bearer " + accessToken
+export const useGetProfile = (token: string, onOk?: Function, onError?: Function) => {
+    return useQuery({
+        queryKey: ['get_profile', token],
+        queryFn: async () => {
+            const result = await axios.get(BASE_URL + '/auth/me', {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
+
+            return result
+        },
+        onSuccess: (data: any) => {
+            onOk && onOk(data.data)
+        },
+        onError: (error: any) => {
+            console.log(error)
+            onError && onError()
         }
     })
 }

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAppContext } from "./app-provider";
 import { CookieKeys } from "../../shared/constants/cookie";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,7 @@ import Link from "next/link";
 import { handlePdfLink } from "../../shared/utils/handlePdfLink";
 import Image from "next/image";
 import UploadIncomeModal from "../../shared/components/modals/upload-income-modal";
+import { useGetProfile } from "../../shared/services/user";
 
 export default function Home() {
   const router = useRouter()
@@ -21,14 +22,14 @@ export default function Home() {
   const [isIncomeModalOpen, setIsIncomeModalOpen] = useState(false)
   const [status, setStatus] = useState<string[] | undefined>()
 
-  useEffect(() => {
-    if (!appContext.user && !localStorage.getItem(CookieKeys.accessToken)) {
-      router.push('/login')
-      notification.error({
-        message: "Phiên đăng nhập đã hết hạn"
-      })
-    }
-  }, [])
+  useGetProfile(appContext.token, (user: any) => {
+    appContext.setUser(user)
+  }, () => {
+    notification.error({
+      message: "Phiên đăng nhập đã hết hạn"
+    })
+    router.push('/login')
+  })
 
   const handleChangeTab = () => {
 

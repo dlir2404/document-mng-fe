@@ -20,7 +20,6 @@ const LoginPage = () => {
     const login = useLogin((token: string) => {
         localStorage.setItem(CookieKeys.accessToken, token)
         appContext.setToken(token)
-        appContext.getProfile(token)
         notification.success({
             message: "Đăng nhập thành công"
         })

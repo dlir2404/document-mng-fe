@@ -23,7 +23,26 @@ export const OPTIONS = {
             }
         ],
         GOING: [
-
+            {
+                label: 'Tra cứu',
+                value: undefined
+            },
+            {
+                label: 'Dự thảo văn bản đi',
+                value: ['WAITING_FOR_ASSIGNMENT']
+            },
+            {
+                label: 'Đã giao giải quyết',
+                value: ['ASSIGNED_FOR_PROCESS', 'PROCESSING', 'WAITING_FOR_APPROVE', 'APPROVED', 'PUBLISHED']
+            },
+            {
+                label: 'Chờ phê duyệt',
+                value: ['WAITING_FOR_APPROVE']
+            },
+            {
+                label: 'Đã phê duyệt',
+                value: ['APPROVED', 'PUBLISHED']
+            }
         ]
     },
     SPECIALIST: {
@@ -45,7 +64,24 @@ export const OPTIONS = {
                 value: ['WAITING_FOR_APPROVING_DRAFT', 'APPROVED_DRAFT']
             }
         ],
-        GOING: []
+        GOING: [
+            {
+                label: 'Tra cứu',
+                value: undefined
+            },
+            {
+                label: 'Chờ tiếp nhận',
+                value: ['ASSIGNED_FOR_PROCESS']
+            },
+            {
+                label: 'Đang giải quyết',
+                value: ['PROCESSING']
+            },
+            {
+                label: 'Đã giải quyết',
+                value: ['WAITING_FOR_APPROVE', 'APPROVED', 'PUBLISHED']
+            }
+        ]
     },
     OFFICE_CLERK: {
         INCOME: [
@@ -62,7 +98,20 @@ export const OPTIONS = {
                 value: ['PRESENTED_TO_LEADER', 'ASSIGNED_FOR_PROCESS', 'PROCESSING', 'WAITING_FOR_APPROVING_DRAFT', 'APPROVED_DRAFT']
             }
         ],
-        GOING: []
+        GOING: [
+            {
+                label: 'Tra cứu',
+                value: undefined
+            },
+            {
+                label: 'Chờ phát hành',
+                value: ['APPROVED']
+            },
+            {
+                label: 'Đã phassst hành',
+                value: ['PUBLISHED']
+            }
+        ]
     }
 }
 

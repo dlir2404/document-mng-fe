@@ -18,6 +18,7 @@ import PresentToLeaderModal from "../../shared/components/modals/present-to-lead
 import RequestProcessIncome from "../../shared/components/modals/request-process-income";
 import AcceptProcessIncome from "../../shared/components/modals/accept-process-income";
 import DenyProcessIncome from "../../shared/components/modals/deny-process-income";
+import CompleteProcess from "../../shared/components/modals/complete-process";
 
 const exchangeRoleName = (role: number): string => {
   switch (role) {
@@ -41,6 +42,7 @@ export default function Home() {
   const [isRequestProccessIncome, setIsRequestProccessIncome] = useState(false)
   const [isAcceptProccessIncome, setIsAcceptProccessIncome] = useState(false)
   const [isDenyProccessIncome, setIsDenyProccessIncome] = useState(false)
+  const [isCompleteProccessIncome, setIsCompleteProccessIncome] = useState(false)
   const [status, setStatus] = useState<string[] | undefined>()
 
   useGetProfile(appContext.token, (user: any) => {
@@ -97,7 +99,13 @@ export default function Home() {
         }
         if (status === 'PROCESSING') {
           return (
-            <Button>Hoàn thành xử lý</Button>
+            <Button
+              onClick={() => {
+                setDocumentId(record.id)
+                setIsCompleteProccessIncome(true)
+              }}
+            >Hoàn thành xử lý
+            </Button>
           )
         }
         return (<p className="w-full text-center">--</p>)
@@ -254,6 +262,8 @@ export default function Home() {
       <RequestProcessIncome documentId={documentId} onOk={() => { refetch() }} isOpen={isRequestProccessIncome} setIsOpen={setIsRequestProccessIncome}></RequestProcessIncome>
       <AcceptProcessIncome documentId={documentId} onOk={() => { refetch() }} isOpen={isAcceptProccessIncome} setIsOpen={setIsAcceptProccessIncome}></AcceptProcessIncome>
       <DenyProcessIncome documentId={documentId} onOk={() => { refetch() }} isOpen={isDenyProccessIncome} setIsOpen={setIsDenyProccessIncome}></DenyProcessIncome>
+      <CompleteProcess documentId={documentId} onOk={() => { refetch() }} isOpen={isCompleteProccessIncome} setIsOpen={setIsCompleteProccessIncome}></CompleteProcess>
+
     </>
   );
 }

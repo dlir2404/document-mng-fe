@@ -27,6 +27,13 @@ export interface IUploadIncomeBody {
     token?: string;
 }
 
+export interface IUploadDraftBody {
+    file: any;
+    abstract?: string;
+    documentId?: number;
+    token?: string;
+}
+
 export interface IPresentToLeader {
     leaderId: number;
     documentId: number;
@@ -190,6 +197,27 @@ export const useDenyProcessIncome = (okFn?: Function, errFn?: Function) => {
             notification.error({
                 message: error.message || "Có lỗi xảy ra"
             })
+        }
+    })
+}
+
+export const useUploadDraftDocument = (okFn?: Function, errFn?: Function) => {
+    return useMutation({
+        mutationFn: async (body: IUploadDraftBody) => {
+            console.log(body.token)
+            return await axios.post(BASE_URL + '/income/process/complete', body, {
+                headers: {
+                    'Authorization': 'Bearer ' + body.token,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        },
+        onSuccess: (data: any) => {
+            okFn && okFn()
+        },
+        onError: (error: any) => {
+            errFn && errFn(error.response?.data?.message || "Có lỗi xảy ra")
+            console.log(error)
         }
     })
 }

@@ -52,7 +52,7 @@ const RequestProcessIncome = ({
     }
     return (
         <>
-            <Modal confirmLoading={isConfirmLoading} width={800} closable={true} title="Phiêu yêu cầu giải quyết" open={isOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal confirmLoading={isConfirmLoading} width={800} closable={true} title="Phiêu chỉ đạo xử lý văn bản đến" open={isOpen} onOk={handleOk} onCancel={handleCancel}>
                 <Form
                     form={form}
                     layout="vertical"
@@ -61,10 +61,10 @@ const RequestProcessIncome = ({
                 >
                     <Row gutter={16}>
                         <Col span={12}>
-                            <Form.Item label='Số phiếu yêu cầu giải quyết'>
+                            <Form.Item label='Số phiếu chỉ đạo xử lý văn bản đến'>
                                 <Input value={1} disabled></Input>
                             </Form.Item>
-                            <Form.Item label='Hạn giải quyết' name='deadline'>
+                            <Form.Item label='Hạn xử lý' name='deadline'>
                                 <DatePicker />
                             </Form.Item>
                         </Col>
@@ -80,7 +80,7 @@ const RequestProcessIncome = ({
                                     })}
                                 />
                             </Form.Item>
-                            <Form.Item label='Chọn chuyên viên giải quyết' name='specialistId'>
+                            <Form.Item label='Chọn chuyên viên chủ trì xử lý' name='specialistId'>
                                 <Select
                                     options={specialists?.data?.rows.map((specialist: any) => {
                                         return {
@@ -90,7 +90,7 @@ const RequestProcessIncome = ({
                                     }) || []}
                                 />
                             </Form.Item>
-                            <Form.Item label='Chọn chuyên viên phối hợp giải quyết' name='collaborators' dependencies={['specialistId']}>
+                            <Form.Item label='Chọn chuyên viên phối hợp xử lý' name='collaborators' dependencies={['specialistId']}>
                                 <Select
                                     mode="multiple"
                                     options={specialists?.data?.rows.map((specialist: any) => {
@@ -101,6 +101,13 @@ const RequestProcessIncome = ({
                                         }
                                     }) || []}
                                 />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col span={24}>
+                            <Form.Item label='Nội dung phương hướng chỉ đạo xử lý' name='processDirection'>
+                                <Input></Input>
                             </Form.Item>
                         </Col>
                     </Row>

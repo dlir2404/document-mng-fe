@@ -65,89 +65,163 @@ export default function Home() {
   }
 
   const handleShowAction = (status: string, role: number, record: any) => {
-    switch (role) {
-      case 2: //leader
-        if (status === 'PRESENTED_TO_LEADER') {
-          return (
-            <Button onClick={() => {
-              setDocumentId(record.id)
-              setIsRequestProccessIncome(true)
-            }}>Giao xử lý</Button>
-          )
-        }
-        if (status === 'WAITING_FOR_APPROVING_DRAFT') {
-          return (
-            <div>
-              <Button
-                type="primary"
-                className="mb-4 mr-4"
-                onClick={() => {
-                  setDocumentId(record.id)
-                  setIsAcceptDraft(true)
-                }}
-              >Duyệt dự thảo</Button>
-              <Button
-                onClick={() => {
-                  setDocumentId(record.id)
-                  setIsDenyDraft(true)
-                }}
-              >Không phê duyệt</Button>
-            </div>
-          )
-        }
-        return (<p className="w-full text-center">--</p>)
-      case 3: //specialist
-        if (status === 'ASSIGNED_FOR_PROCESS') {
-          return (
-            <div>
-              <Button type="primary" className="mb-4 mr-4"
-                onClick={() => {
-                  setDocumentId(record.id)
-                  setIsAcceptProccessIncome(true)
-                }}
-              >Tiếp nhận</Button>
-              <Button
-                onClick={() => {
-                  setDocumentId(record.id)
-                  setIsDenyProccessIncome(true)
-                }}
-              >Trả lại lãnh đạo</Button>
-            </div>
-          )
-        }
-        if (status === 'PROCESSING') {
-          return (
-            <Button
-              onClick={() => {
+    if (tabsContext.tabKey === 'income-document') {
+      switch (role) {
+        case 2: //leader
+          if (status === 'PRESENTED_TO_LEADER') {
+            return (
+              <Button onClick={() => {
                 setDocumentId(record.id)
-                setIsCompleteProccessIncome(true)
-              }}
-            >Hoàn thành xử lý
-            </Button>
-          )
-        }
-        return (<p className="w-full text-center">--</p>)
-      case 4: //office_clerk
-        if (status === 'WAITING_FOR_PRESENTING_TO_LEADER') {
-          return (
-            <div>
+                setIsRequestProccessIncome(true)
+              }}>Giao xử lý</Button>
+            )
+          }
+          if (status === 'WAITING_FOR_APPROVING_DRAFT') {
+            return (
+              <div>
+                <Button
+                  type="primary"
+                  className="mb-4 mr-4"
+                  onClick={() => {
+                    setDocumentId(record.id)
+                    setIsAcceptDraft(true)
+                  }}
+                >Duyệt dự thảo</Button>
+                <Button
+                  onClick={() => {
+                    setDocumentId(record.id)
+                    setIsDenyDraft(true)
+                  }}
+                >Không phê duyệt</Button>
+              </div>
+            )
+          }
+          return (<p className="w-full text-center">--</p>)
+        case 3: //specialist
+          if (status === 'ASSIGNED_FOR_PROCESS') {
+            return (
+              <div>
+                <Button type="primary" className="mb-4 mr-4"
+                  onClick={() => {
+                    setDocumentId(record.id)
+                    setIsAcceptProccessIncome(true)
+                  }}
+                >Tiếp nhận</Button>
+                <Button
+                  onClick={() => {
+                    setDocumentId(record.id)
+                    setIsDenyProccessIncome(true)
+                  }}
+                >Trả lại lãnh đạo</Button>
+              </div>
+            )
+          }
+          if (status === 'PROCESSING') {
+            return (
               <Button
                 onClick={() => {
-                  setIsPresentModalOpen(true)
                   setDocumentId(record.id)
+                  setIsCompleteProccessIncome(true)
                 }}
-                className="mb-4 mr-4"
-              >Trình lãnh đạo</Button>
-              <Button danger
+              >Hoàn thành xử lý
+              </Button>
+            )
+          }
+          return (<p className="w-full text-center">--</p>)
+        case 4: //office_clerk
+          if (status === 'WAITING_FOR_PRESENTING_TO_LEADER') {
+            return (
+              <div>
+                <Button
+                  onClick={() => {
+                    setIsPresentModalOpen(true)
+                    setDocumentId(record.id)
+                  }}
+                  className="mb-4 mr-4"
+                >Trình lãnh đạo</Button>
+                <Button danger
+                  onClick={() => {
+                    setDocumentId(record.id)
+                    setIsDeleteProccessIncome(true)
+                  }}
+                >Xóa văn bản</Button>
+              </div>
+            )
+          }
+          return (<p className="w-full text-center">--</p>)
+      }
+    } else {
+      switch (role) {
+        case 2: //leader
+          if (status === 'WAITING_FOR_ASSIGNMENT') {
+            return (
+              <Button onClick={() => {
+                setDocumentId(record.id)
+              }}>Giao chuyên viên giải quyết</Button>
+            )
+          }
+          if (status === 'WAITING_FOR_APPROVE') {
+            return (
+              <div>
+                <Button
+                  type="primary"
+                  className="mb-4 mr-4"
+                  onClick={() => {
+                    setDocumentId(record.id)
+                  }}
+                >Phê duyệt</Button>
+                <Button
+                  onClick={() => {
+                    setDocumentId(record.id)
+                  }}
+                >Không phê duyệt</Button>
+              </div>
+            )
+          }
+          return (<p className="w-full text-center">--</p>)
+        case 3: //specialist
+          if (status === 'ASSIGNMENT_FOR_PROCESS') {
+            return (
+              <div>
+                <Button type="primary" className="mb-4 mr-4"
+                  onClick={() => {
+                    setDocumentId(record.id)
+                  }}
+                >Tiếp nhận</Button>
+                <Button
+                  onClick={() => {
+                    setDocumentId(record.id)
+                  }}
+                >Trả lại lãnh đạo</Button>
+              </div>
+            )
+          }
+          if (status === 'PROCESSING') {
+            return (
+              <Button
                 onClick={() => {
                   setDocumentId(record.id)
-                  setIsDeleteProccessIncome(true)
                 }}
-              >Xóa văn bản</Button>
-            </div>
-          )
-        }
-        return (<p className="w-full text-center">--</p>)
+              >Hoàn thành giải quyết
+              </Button>
+            )
+          }
+          return (<p className="w-full text-center">--</p>)
+        case 4: //office_clerk
+          if (status === 'APPROVED') {
+            return (
+              <div>
+                <Button
+                  onClick={() => {
+                    setDocumentId(record.id)
+                  }}
+                  className="mb-4 mr-4"
+                >Phát hành văn bản đi</Button>
+              </div>
+            )
+          }
+          return (<p className="w-full text-center">--</p>)
+      }
     }
   }
 
@@ -276,7 +350,10 @@ export default function Home() {
       title: goingAttribute['signDate'],
       dataIndex: 'signDate',
       key: 'signDate',
-      render: (value: string) => <p>{formatDate(value)}</p>
+      render: (value: string) => {
+        if (!value) return ''
+        return <p>{formatDate(value)}</p>
+      }
     },
     {
       title: goingAttribute['abstract'],

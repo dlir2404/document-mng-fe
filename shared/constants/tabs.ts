@@ -108,7 +108,7 @@ export const OPTIONS = {
                 value: ['APPROVED']
             },
             {
-                label: 'Đã phassst hành',
+                label: 'Đã phát hành',
                 value: ['PUBLISHED']
             }
         ]

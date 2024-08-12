@@ -46,6 +46,12 @@ export interface IAcceptProcessIncome {
     token?: string;
 }
 
+export interface IDenyProcessIncome {
+    documentId?: number;
+    returnReason?: string;
+    token?: string;
+}
+
 export const useGetListDocument = (params: IDocumentParams, token: string) => {
     return useQuery({
         queryKey: ['document', params],
@@ -152,6 +158,30 @@ export const useAcceptProcessIncome = (okFn?: Function, errFn?: Function) => {
         onSuccess: (data: any) => {
             notification.success({
                 message: 'Đã chấp nhận yêu cầu giải quyết'
+            })
+            okFn && okFn(data)
+        },
+        onError: (error: any) => {
+            errFn && errFn()
+            notification.error({
+                message: error.message || "Có lỗi xảy ra"
+            })
+        }
+    })
+}
+
+export const useDenyProcessIncome = (okFn?: Function, errFn?: Function) => {
+    return useMutation({
+        mutationFn: async(body: IDenyProcessIncome) => {
+            return await axios.post(BASE_URL + '/income/request-process/deny',  body, {
+                headers: {
+                    "Authorization": 'Bearer ' + body.token
+                }
+            })
+        },
+        onSuccess: (data: any) => {
+            notification.success({
+                message: 'Đã từ chối yêu cầu giải quyết'
             })
             okFn && okFn(data)
         },

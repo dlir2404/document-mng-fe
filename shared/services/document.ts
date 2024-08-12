@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "react-query";
 import { BASE_URL } from "../constants/baseUrl";
 import axios from "axios";
+import { notification } from "antd";
 
 export interface IDocumentParams {
     type: string;
@@ -23,6 +24,13 @@ export interface IUploadIncomeBody {
     thematic?: string;
     category?: string;
     abstract?: string;
+    token?: string;
+}
+
+export interface IPresentToLeader {
+    leaderId: number;
+    documentId: number;
+    emergencyLevel: string;
     token?: string;
 }
 
@@ -68,6 +76,30 @@ export const useUploadIncomeDocument = (okFn?: Function, errFn?: Function) => {
         onError: (error: any) => {
             errFn && errFn(error.response?.data?.message || "Có lỗi xảy ra")
             console.log(error)
+        }
+    })
+}
+
+export const usePresentToLeader = (okFn?: Function, errFn?: Function) => {
+    return useMutation({
+        mutationFn: async(body: IPresentToLeader) => {
+            return await axios.post(BASE_URL + '/income/present-to-leader',  body, {
+                headers: {
+                    "Authorization": 'Bearer ' + body.token
+                }
+            })
+        },
+        onSuccess: (data: any) => {
+            notification.success({
+                message: 'Trình lãnh đạo thành công'
+            })
+            okFn && okFn(data)
+        },
+        onError: (error: any) => {
+            errFn && errFn()
+            notification.error({
+                message: error.message || "Có lỗi xảy ra"
+            })
         }
     })
 }

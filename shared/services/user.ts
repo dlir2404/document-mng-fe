@@ -41,3 +41,13 @@ export const useGetProfile = (token: string, onOk?: Function, onError?: Function
         }
     })
 }
+
+export const useGetUserByRole = (onOk?: Function, onError?: Function) => {
+    return useQuery({
+        queryKey: ['get_user_by_key'],
+        queryFn: async () =>  await axios.get(BASE_URL + '/user/leader/all'),
+        onSuccess: (data) => {
+            return data.data.data
+        }
+    })
+}

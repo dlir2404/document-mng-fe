@@ -14,6 +14,7 @@ import { handlePdfLink } from "../../shared/utils/handlePdfLink";
 import Image from "next/image";
 import UploadIncomeModal from "../../shared/components/modals/upload-income-modal";
 import { useGetProfile } from "../../shared/services/user";
+import PresentToLeaderModal from "../../shared/components/modals/present-to-leader";
 
 const exchangeRoleName = (role: number): string => {
   switch (role) {
@@ -25,11 +26,15 @@ const exchangeRoleName = (role: number): string => {
   }
 }
 
+
+
 export default function Home() {
   const router = useRouter()
   const appContext = useAppContext()
   const tabsContext = useTabsContext()
+  const [documentId, setDocumentId] = useState()
   const [isIncomeModalOpen, setIsIncomeModalOpen] = useState(false)
+  const [isPresentModalOpen, setIsPresentModalOpen] = useState(false)
   const [status, setStatus] = useState<string[] | undefined>()
 
   useGetProfile(appContext.token, (user: any) => {
@@ -43,6 +48,57 @@ export default function Home() {
 
   const handleChangeTab = (event: any) => {
     setStatus(event.target.value)
+  }
+
+  const handleShowAction = (status: string, role: number, record: any) => {
+    switch (role) {
+      case 2: //leader
+        if (status === 'PRESENTED_TO_LEADER') {
+          return (
+            <Button>Giao xử lý</Button>
+          )
+        }
+        if (status === 'WAITING_FOR_APPROVING_DRAFT') {
+          return (
+            <div>
+              <Button type="primary" className="mb-4 mr-4">Duyệt dự thảo</Button>
+              <Button>Không phê duyệt</Button>
+            </div>
+          )
+        }
+        return (<p className="w-full text-center">--</p>)
+      case 3: //specialist
+        if (status === 'ASSIGNED_FOR_PROCESS') {
+          return (
+            <div>
+              <Button className="mb-4 mr-4">Tiếp nhận</Button>
+              <Button>Trả lại lãnh đạo</Button>
+            </div>
+          )
+        }
+        if (status === 'PROCESSING') {
+          return (
+            <Button>Hoàn thành xử lý</Button>
+          )
+        }
+        return (<p className="w-full text-center">--</p>)
+      case 4: //office_clerk
+        if (status === 'WAITING_FOR_PRESENTING_TO_LEADER') {
+          return (
+            <div>
+              <Button 
+              onClick={() => {
+                setIsPresentModalOpen(true)
+                setDocumentId(record.id)
+              }} 
+              className="mb-4 mr-4"
+              >Trình lãnh đạo</Button>
+              <Button>Xóa văn bản</Button>
+            </div>
+          )
+        }
+        return (<p className="w-full text-center">--</p>)
+    }
   }
 
   let options: any[] = []
@@ -116,6 +172,14 @@ export default function Home() {
       // key: 'arrivalDate',
     },
     {
+      title: 'Hành động',
+      dataIndex: 'status',
+      key: 'action',
+      render: (status: string, record: any) => {
+        return handleShowAction(status, appContext.user?.role, record)
+      }
+    },
+    {
       title: incomeAttribute['incomeUrl'],
       dataIndex: 'incomeUrl',
       key: 'incomeUrl',
@@ -167,6 +231,7 @@ export default function Home() {
         />
       </div>
       <UploadIncomeModal onOk={() => { refetch() }} isOpen={isIncomeModalOpen} setIsOpen={setIsIncomeModalOpen}></UploadIncomeModal>
+      <PresentToLeaderModal documentId={documentId} onOk={() => { refetch() }} isOpen={isPresentModalOpen} setIsOpen={setIsPresentModalOpen}></PresentToLeaderModal>
     </>
   );
 }

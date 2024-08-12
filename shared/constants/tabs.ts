@@ -33,7 +33,7 @@ export const OPTIONS = {
             },
             {
                 label: 'Đã giao giải quyết',
-                value: ['ASSIGNED_FOR_PROCESS', 'PROCESSING', 'WAITING_FOR_APPROVE', 'APPROVED', 'PUBLISHED']
+                value: ['ASSIGNMENT_FOR_PROCESS', 'PROCESSING', 'WAITING_FOR_APPROVE', 'APPROVED', 'PUBLISHED']
             },
             {
                 label: 'Chờ phê duyệt',

@@ -49,6 +49,14 @@ export interface IRequestProcessIncome {
     token?: string;
 }
 
+export interface IRequestProcessGoing {
+    documentId?: number;
+    specialistId?: number;
+    processDirection?: string;
+    deadline?: string;
+    token?: string;
+}
+
 export interface IDenyDraft {
     specialistId?: number;
     documentId?: number;
@@ -152,6 +160,30 @@ export const useRequestProcessIncome = (okFn?: Function, errFn?: Function) => {
     return useMutation({
         mutationFn: async(body: IRequestProcessIncome) => {
             return await axios.post(BASE_URL + '/income/request-process',  body, {
+                headers: {
+                    "Authorization": 'Bearer ' + body.token
+                }
+            })
+        },
+        onSuccess: (data: any) => {
+            notification.success({
+                message: 'Yêu cầu giải quyết thành công'
+            })
+            okFn && okFn(data)
+        },
+        onError: (error: any) => {
+            errFn && errFn()
+            notification.error({
+                message: error.message || "Có lỗi xảy ra"
+            })
+        }
+    })
+}
+
+export const useRequestProcessGoing = (okFn?: Function, errFn?: Function) => {
+    return useMutation({
+        mutationFn: async(body: IRequestProcessGoing) => {
+            return await axios.post(BASE_URL + '/going/request-process',  body, {
                 headers: {
                     "Authorization": 'Bearer ' + body.token
                 }

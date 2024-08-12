@@ -21,6 +21,7 @@ import DenyProcessIncome from "../../shared/components/modals/deny-process-incom
 import CompleteProcess from "../../shared/components/modals/complete-process";
 import DeleteIncome from "../../shared/components/modals/delete-income";
 import AcceptDraft from "../../shared/components/modals/accept-draft";
+import DenyDraft from "../../shared/components/modals/deny-draft";
 
 const exchangeRoleName = (role: number): string => {
   switch (role) {
@@ -47,6 +48,7 @@ export default function Home() {
   const [isCompleteProccessIncome, setIsCompleteProccessIncome] = useState(false)
   const [isDeleteProccessIncome, setIsDeleteProccessIncome] = useState(false)
   const [isAcceptDraft, setIsAcceptDraft] = useState(false)
+  const [isDenyDraft, setIsDenyDraft] = useState(false)
   const [status, setStatus] = useState<string[] | undefined>()
 
   useGetProfile(appContext.token, (user: any) => {
@@ -76,15 +78,20 @@ export default function Home() {
         if (status === 'WAITING_FOR_APPROVING_DRAFT') {
           return (
             <div>
-              <Button 
-              type="primary" 
-              className="mb-4 mr-4"
-              onClick={() => {
-                setDocumentId(record.id)
-                setIsAcceptDraft(true)
-              }}
+              <Button
+                type="primary"
+                className="mb-4 mr-4"
+                onClick={() => {
+                  setDocumentId(record.id)
+                  setIsAcceptDraft(true)
+                }}
               >Duyệt dự thảo</Button>
-              <Button>Không phê duyệt</Button>
+              <Button
+                onClick={() => {
+                  setDocumentId(record.id)
+                  setIsDenyDraft(true)
+                }}
+              >Không phê duyệt</Button>
             </div>
           )
         }
@@ -281,6 +288,7 @@ export default function Home() {
       <CompleteProcess documentId={documentId} onOk={() => { refetch() }} isOpen={isCompleteProccessIncome} setIsOpen={setIsCompleteProccessIncome}></CompleteProcess>
       <DeleteIncome documentId={documentId} onOk={() => { refetch() }} isOpen={isDeleteProccessIncome} setIsOpen={setIsDeleteProccessIncome}></DeleteIncome>
       <AcceptDraft documentId={documentId} onOk={() => { refetch() }} isOpen={isAcceptDraft} setIsOpen={setIsAcceptDraft}></AcceptDraft>
+      <DenyDraft documentId={documentId} onOk={() => { refetch() }} isOpen={isDenyDraft} setIsOpen={setIsDenyDraft}></DenyDraft>
     </>
   );
 }

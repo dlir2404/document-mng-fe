@@ -22,7 +22,7 @@ const PresentToLeaderModal = ({
     const [isConfirmLoading, setIsConfirmLoading] = useState(false)
     const appContext = useAppContext()
 
-    const { data } = useGetUserByRole(1)
+    const { data } = useGetUserByRole(2)
     const present = usePresentToLeader(() => {
         onOk && onOk()
         setIsConfirmLoading(false)

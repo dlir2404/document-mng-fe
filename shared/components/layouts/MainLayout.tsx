@@ -42,6 +42,11 @@ export default function MainLayout({
             key: 'going-document',
             label: 'Văn bản đi',
             onClick: () => setTabKey('going-document')
+        },
+        {
+            key: 'report',
+            label: 'Báo cáo',
+            onClick: () => {alert('Coming soon!!!!!!!!!!!')}
         }
     ]
 

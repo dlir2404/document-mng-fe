@@ -86,7 +86,38 @@ const CompleteProcessGoing = ({
                                 <Input></Input>
                             </Form.Item>
                             <Form.Item label='Thể loại' name='category'>
-                                <Input></Input>
+                                <Select
+                                    options={[
+                                        {
+                                            label: 'Công văn',
+                                            value: 'Công văn'
+                                        },
+                                        {
+                                            label: 'Chỉ thị',
+                                            value: 'Chỉ thị'
+                                        },
+                                        {
+                                            label: 'Quy chế',
+                                            value: 'Quy chế'
+                                        },
+                                        {
+                                            label: 'Quy định',
+                                            value: 'Quy định'
+                                        },
+                                        {
+                                            label: 'Thông cáo',
+                                            value: 'Thông cáo'
+                                        },
+                                        {
+                                            label: 'Thông báo',
+                                            value: 'Thông báo'
+                                        },
+                                        {
+                                            label: 'Hướng dẫn',
+                                            value: 'Hướng dẫn'
+                                        }
+                                    ]}
+                                />
                             </Form.Item>
                         </Col>
                         <Col span={8}>

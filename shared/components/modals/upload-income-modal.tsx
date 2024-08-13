@@ -1,5 +1,5 @@
 'use client'
-import { Button, Col, DatePicker, Form, Input, Modal, notification, Row, Upload } from "antd";
+import { Button, Col, DatePicker, Form, Input, Modal, notification, Row, Select, Upload } from "antd";
 import { UploadOutlined } from '@ant-design/icons';
 import { useState } from "react"
 import { incomeAttribute } from "../../constants/attribute";
@@ -108,7 +108,38 @@ const UploadIncomeModal = ({
                                 <Input />
                             </Form.Item>
                             <Form.Item label={incomeAttribute['category']} name='category'>
-                                <Input />
+                                <Select 
+                                    options={[
+                                        {
+                                            label: 'Công văn',
+                                            value: 'Công văn'
+                                        },
+                                        {
+                                            label: 'Chỉ thị',
+                                            value: 'Chỉ thị'
+                                        },
+                                        {
+                                            label: 'Quy chế',
+                                            value: 'Quy chế'
+                                        },
+                                        {
+                                            label: 'Quy định',
+                                            value: 'Quy định'
+                                        },
+                                        {
+                                            label: 'Thông cáo',
+                                            value: 'Thông cáo'
+                                        },
+                                        {
+                                            label: 'Thông báo',
+                                            value: 'Thông báo'
+                                        },
+                                        {
+                                            label: 'Hướng dẫn',
+                                            value: 'Hướng dẫn'
+                                        }
+                                    ]}
+                                />
                             </Form.Item>
                             <Form.Item label={incomeAttribute['abstract']} name='abstract'>
                                 <Input />

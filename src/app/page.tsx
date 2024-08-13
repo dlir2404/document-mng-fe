@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
 import { useAppContext } from "./app-provider";
-import { CookieKeys } from "../../shared/constants/cookie";
 import { useRouter } from "next/navigation";
 import { Button, notification, Radio, Table, Tag } from "antd";
 import { useTabsContext } from "../../shared/components/layouts/MainLayout";
@@ -28,6 +27,7 @@ import DenyProcessGoing from "../../shared/components/modals/deny-process-going"
 import CompleteProcessGoing from "../../shared/components/modals/complete-process-going";
 import AcceptGoingDocument from "../../shared/components/modals/accept-going-document";
 import PublishGoingDocument from "../../shared/components/modals/publish-going-document";
+import DocumentDetail from "../../shared/components/modals/document-detail";
 
 const exchangeRoleName = (role: number): string => {
   switch (role) {
@@ -45,7 +45,9 @@ export default function Home() {
   const router = useRouter()
   const appContext = useAppContext()
   const tabsContext = useTabsContext()
-  const [documentId, setDocumentId] = useState()
+  const [document, setDocument] = useState<any>()
+  const [detailModel, setDetailModal] = useState(false)
+
   const [isIncomeModalOpen, setIsIncomeModalOpen] = useState(false)
   const [isPresentModalOpen, setIsPresentModalOpen] = useState(false)
   const [isRequestProccessIncome, setIsRequestProccessIncome] = useState(false)
@@ -94,7 +96,7 @@ export default function Home() {
           if (status === 'PRESENTED_TO_LEADER') {
             return (
               <Button onClick={() => {
-                setDocumentId(record.id)
+                setDocument(record)
                 setIsRequestProccessIncome(true)
               }}>Giao xử lý</Button>
             )
@@ -106,13 +108,13 @@ export default function Home() {
                   type="primary"
                   className="mb-4 mr-4"
                   onClick={() => {
-                    setDocumentId(record.id)
+                    setDocument(record)
                     setIsAcceptDraft(true)
                   }}
                 >Duyệt dự thảo</Button>
                 <Button
                   onClick={() => {
-                    setDocumentId(record.id)
+                    setDocument(record)
                     setIsDenyDraft(true)
                   }}
                 >Không phê duyệt</Button>
@@ -126,13 +128,13 @@ export default function Home() {
               <div>
                 <Button type="primary" className="mb-4 mr-4"
                   onClick={() => {
-                    setDocumentId(record.id)
+                    setDocument(record)
                     setIsAcceptProccessIncome(true)
                   }}
                 >Tiếp nhận</Button>
                 <Button
                   onClick={() => {
-                    setDocumentId(record.id)
+                    setDocument(record)
                     setIsDenyProccessIncome(true)
                   }}
                 >Trả lại lãnh đạo</Button>
@@ -143,7 +145,7 @@ export default function Home() {
             return (
               <Button
                 onClick={() => {
-                  setDocumentId(record.id)
+                  setDocument(record)
                   setIsCompleteProccessIncome(true)
                 }}
               >Hoàn thành xử lý
@@ -158,13 +160,13 @@ export default function Home() {
                 <Button
                   onClick={() => {
                     setIsPresentModalOpen(true)
-                    setDocumentId(record.id)
+                    setDocument(record)
                   }}
                   className="mb-4 mr-4"
                 >Trình lãnh đạo</Button>
                 <Button danger
                   onClick={() => {
-                    setDocumentId(record.id)
+                    setDocument(record)
                     setIsDeleteProccessIncome(true)
                   }}
                 >Xóa văn bản</Button>
@@ -179,7 +181,7 @@ export default function Home() {
           if (status === 'WAITING_FOR_ASSIGNMENT') {
             return (
               <Button onClick={() => {
-                setDocumentId(record.id)
+                setDocument(record)
                 setIsRequestProccessGoing(true)
               }}>Giao chuyên viên giải quyết</Button>
             )
@@ -191,13 +193,13 @@ export default function Home() {
                   type="primary"
                   className="mb-4 mr-4"
                   onClick={() => {
-                    setDocumentId(record.id)
+                    setDocument(record)
                     setIsAcceptGoing(true)
                   }}
                 >Phê duyệt</Button>
                 <Button
                   onClick={() => {
-                    setDocumentId(record.id)
+                    setDocument(record)
                   }}
                 >Không phê duyệt</Button>
               </div>
@@ -210,13 +212,13 @@ export default function Home() {
               <div>
                 <Button type="primary" className="mb-4 mr-4"
                   onClick={() => {
-                    setDocumentId(record.id)
+                    setDocument(record)
                     setIsAcceptProccessGoing(true)
                   }}
                 >Tiếp nhận</Button>
                 <Button
                   onClick={() => {
-                    setDocumentId(record.id)
+                    setDocument(record)
                     setIsDenyProccessGoing(true)
                   }}
                 >Trả lại lãnh đạo</Button>
@@ -227,7 +229,7 @@ export default function Home() {
             return (
               <Button
                 onClick={() => {
-                  setDocumentId(record.id)
+                  setDocument(record)
                   setIsCompleteProccessGoing(true)
                 }}
               >Hoàn thành giải quyết
@@ -241,7 +243,7 @@ export default function Home() {
               <div>
                 <Button
                   onClick={() => {
-                    setDocumentId(record.id)
+                    setDocument(record)
                     setIsPublishGoing(true)
                   }}
                   className="mb-4 mr-4"
@@ -334,6 +336,13 @@ export default function Home() {
       title: 'Hành động',
       dataIndex: 'status',
       key: 'action',
+      onCell: () => {
+        return {
+          onClick: (e: any) => {
+            e.stopPropagation();
+          },
+        };
+      },
       render: (status: string, record: any) => {
         return handleShowAction(status, appContext.user?.role, record)
       }
@@ -434,6 +443,13 @@ export default function Home() {
       title: 'Hành động',
       dataIndex: 'status',
       key: 'action',
+      onCell: () => {
+        return {
+          onClick: (e: any) => {
+            e.stopPropagation();
+          },
+        };
+      },
       render: (status: string, record: any) => {
         return handleShowAction(status, appContext.user?.role, record)
       }
@@ -486,25 +502,35 @@ export default function Home() {
           loading={isLoading}
           columns={tabsContext.tabKey === 'income-document' ? columnsIncome : tabsContext.tabKey === 'going-document' ? columnsGoing : []}
           bordered
+          onRow={(record) => {
+            return {
+              onClick: () => {
+                setDocument(record)
+                setDetailModal(true)
+              }
+            }
+          }}
           dataSource={data?.rows.map((row: any, index: number) => { return { key: index + 1, ...row } }) || []}
         />
       </div>
+      <DocumentDetail document={document} isOpen={detailModel} setIsOpen={setDetailModal}></DocumentDetail>
+
       <UploadIncomeModal onOk={() => { refetch() }} isOpen={isIncomeModalOpen} setIsOpen={setIsIncomeModalOpen}></UploadIncomeModal>
-      <PresentToLeaderModal documentId={documentId} onOk={() => { refetch() }} isOpen={isPresentModalOpen} setIsOpen={setIsPresentModalOpen}></PresentToLeaderModal>
-      <RequestProcessIncome documentId={documentId} onOk={() => { refetch() }} isOpen={isRequestProccessIncome} setIsOpen={setIsRequestProccessIncome}></RequestProcessIncome>
-      <AcceptProcessIncome documentId={documentId} onOk={() => { refetch() }} isOpen={isAcceptProccessIncome} setIsOpen={setIsAcceptProccessIncome}></AcceptProcessIncome>
-      <DenyProcessIncome documentId={documentId} onOk={() => { refetch() }} isOpen={isDenyProccessIncome} setIsOpen={setIsDenyProccessIncome}></DenyProcessIncome>
-      <CompleteProcess documentId={documentId} onOk={() => { refetch() }} isOpen={isCompleteProccessIncome} setIsOpen={setIsCompleteProccessIncome}></CompleteProcess>
-      <DeleteIncome documentId={documentId} onOk={() => { refetch() }} isOpen={isDeleteProccessIncome} setIsOpen={setIsDeleteProccessIncome}></DeleteIncome>
-      <AcceptDraft documentId={documentId} onOk={() => { refetch() }} isOpen={isAcceptDraft} setIsOpen={setIsAcceptDraft}></AcceptDraft>
-      <DenyDraft documentId={documentId} onOk={() => { refetch() }} isOpen={isDenyDraft} setIsOpen={setIsDenyDraft}></DenyDraft>
+      <PresentToLeaderModal documentId={document?.id} onOk={() => { refetch() }} isOpen={isPresentModalOpen} setIsOpen={setIsPresentModalOpen}></PresentToLeaderModal>
+      <RequestProcessIncome documentId={document?.id} onOk={() => { refetch() }} isOpen={isRequestProccessIncome} setIsOpen={setIsRequestProccessIncome}></RequestProcessIncome>
+      <AcceptProcessIncome documentId={document?.id} onOk={() => { refetch() }} isOpen={isAcceptProccessIncome} setIsOpen={setIsAcceptProccessIncome}></AcceptProcessIncome>
+      <DenyProcessIncome documentId={document?.id} onOk={() => { refetch() }} isOpen={isDenyProccessIncome} setIsOpen={setIsDenyProccessIncome}></DenyProcessIncome>
+      <CompleteProcess documentId={document?.id} onOk={() => { refetch() }} isOpen={isCompleteProccessIncome} setIsOpen={setIsCompleteProccessIncome}></CompleteProcess>
+      <DeleteIncome documentId={document?.id} onOk={() => { refetch() }} isOpen={isDeleteProccessIncome} setIsOpen={setIsDeleteProccessIncome}></DeleteIncome>
+      <AcceptDraft documentId={document?.id} onOk={() => { refetch() }} isOpen={isAcceptDraft} setIsOpen={setIsAcceptDraft}></AcceptDraft>
+      <DenyDraft documentId={document?.id} onOk={() => { refetch() }} isOpen={isDenyDraft} setIsOpen={setIsDenyDraft}></DenyDraft>
     
-      <RequestProcessGoing documentId={documentId} onOk={() => { refetch() }} isOpen={isRequestProccessGoing} setIsOpen={setIsRequestProccessGoing}></RequestProcessGoing>
-      <AcceptProcessGoing documentId={documentId} onOk={() => { refetch() }} isOpen={isAcceptProccessGoing} setIsOpen={setIsAcceptProccessGoing}></AcceptProcessGoing>
-      <DenyProcessGoing documentId={documentId} onOk={() => { refetch() }} isOpen={isDenyProccessGoing} setIsOpen={setIsDenyProccessGoing}></DenyProcessGoing>
-      <CompleteProcessGoing documentId={documentId} onOk={() => { refetch() }} isOpen={isCompleteProccessGoing} setIsOpen={setIsCompleteProccessGoing}></CompleteProcessGoing>
-      <AcceptGoingDocument documentId={documentId} onOk={() => { refetch() }} isOpen={isAcceptGoing} setIsOpen={setIsAcceptGoing}></AcceptGoingDocument>
-      <PublishGoingDocument documentId={documentId} onOk={() => { refetch() }} isOpen={isPublishGoing} setIsOpen={setIsPublishGoing}></PublishGoingDocument>
+      <RequestProcessGoing documentId={document?.id} onOk={() => { refetch() }} isOpen={isRequestProccessGoing} setIsOpen={setIsRequestProccessGoing}></RequestProcessGoing>
+      <AcceptProcessGoing documentId={document?.id} onOk={() => { refetch() }} isOpen={isAcceptProccessGoing} setIsOpen={setIsAcceptProccessGoing}></AcceptProcessGoing>
+      <DenyProcessGoing documentId={document?.id} onOk={() => { refetch() }} isOpen={isDenyProccessGoing} setIsOpen={setIsDenyProccessGoing}></DenyProcessGoing>
+      <CompleteProcessGoing documentId={document?.id} onOk={() => { refetch() }} isOpen={isCompleteProccessGoing} setIsOpen={setIsCompleteProccessGoing}></CompleteProcessGoing>
+      <AcceptGoingDocument documentId={document?.id} onOk={() => { refetch() }} isOpen={isAcceptGoing} setIsOpen={setIsAcceptGoing}></AcceptGoingDocument>
+      <PublishGoingDocument documentId={document?.id} onOk={() => { refetch() }} isOpen={isPublishGoing} setIsOpen={setIsPublishGoing}></PublishGoingDocument>
     </>
   );
 }

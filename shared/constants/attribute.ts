@@ -14,6 +14,7 @@ export const incomeAttribute = {
     "category": "Thể loại",
     "abstract": "Trích yếu",
     "status": "Trạng thái",
+    "deadline": "Hạn xử lý",
     "incomeUrl": "File văn bản đến",
     "draftUrl": "File dự thảo",
 }
@@ -31,8 +32,9 @@ export const goingAttribute = {
     "mainProcessor": "Chủ trì giải quyết",
     "collaborators": "Phối hợp giải quyết",
     "category": "Thể loại",
-    "abstract": "Trích yếu",
+    "abstract": "Trích yếusss",
     "abstractDraft": "Trích yếu dự thảo",
+    "deadline": "Hạn giải quyết",
     "status": "Trạng thái",
     "goingUrl": "File văn bản đi",
     "draftUrl": "File dự thảo",

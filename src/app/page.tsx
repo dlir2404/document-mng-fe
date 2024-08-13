@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppContext } from "./app-provider";
 import { CookieKeys } from "../../shared/constants/cookie";
 import { useRouter } from "next/navigation";
@@ -63,6 +63,7 @@ export default function Home() {
   const [isAcceptGoing, setIsAcceptGoing] = useState(false)
   const [isPublishGoing, setIsPublishGoing] = useState(false)
 
+  const [isUploadBtn, setIsUploadBtn] = useState(true)
   const [status, setStatus] = useState<string[] | undefined>()
 
   useGetProfile(appContext.token, (user: any) => {
@@ -73,6 +74,14 @@ export default function Home() {
     })
     router.push('/login')
   })
+
+  useEffect(() => {
+    if ([2, 3].includes(appContext.user?.role) && tabsContext.tabKey === 'income-document') {
+      setIsUploadBtn(false)
+    } else {
+      setIsUploadBtn(true)
+    }
+  }, [appContext.user, tabsContext.tabKey])
 
   const handleChangeTab = (event: any) => {
     setStatus(event.target.value)
@@ -308,6 +317,12 @@ export default function Home() {
       // key: 'arrivalDate',
     },
     {
+      title: incomeAttribute['deadline'],
+      dataIndex: 'deadline',
+      key: 'deadline',
+      render: (value: string) => <p>{formatDate(value)}</p>
+    },
+    {
       title: incomeAttribute['status'],
       dataIndex: 'status',
       key: 'status',
@@ -381,6 +396,11 @@ export default function Home() {
       key: 'abstract',
     },
     {
+      title: goingAttribute['abstractDraft'],
+      dataIndex: 'abstractDraft',
+      key: 'abstractDraft',
+    },
+    {
       title: goingAttribute['sendFrom'],
       dataIndex: 'sendFrom',
       key: 'sendFrom',
@@ -395,6 +415,12 @@ export default function Home() {
       title: goingAttribute['collaborators'],
       // dataIndex: 'arrivalDate',
       // key: 'arrivalDate',
+    },
+    {
+      title: goingAttribute['deadline'],
+      dataIndex: 'deadline',
+      key: 'deadline',
+      render: (value: string) => <p>{formatDate(value)}</p>
     },
     {
       title: goingAttribute['status'],
@@ -447,7 +473,7 @@ export default function Home() {
   return (
     <>
       <div>
-        <Button className="mr-4" onClick={() => setIsIncomeModalOpen(true)}>Upload</Button>
+        {isUploadBtn && (<Button className="mr-4" onClick={() => setIsIncomeModalOpen(true)}>Upload</Button>)}
         <Radio.Group
           options={options}
           onChange={handleChangeTab}

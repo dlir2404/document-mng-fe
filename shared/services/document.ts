@@ -91,6 +91,12 @@ export interface IDenyProcessIncome {
     token?: string;
 }
 
+export interface IDenyProcessGoing {
+    documentId?: number;
+    returnReason?: string;
+    token?: string;
+}
+
 export const useGetListDocument = (params: IDocumentParams, token: string) => {
     return useQuery({
         queryKey: ['document', params],
@@ -333,6 +339,30 @@ export const useDenyProcessIncome = (okFn?: Function, errFn?: Function) => {
     return useMutation({
         mutationFn: async(body: IDenyProcessIncome) => {
             return await axios.post(BASE_URL + '/income/request-process/deny',  body, {
+                headers: {
+                    "Authorization": 'Bearer ' + body.token
+                }
+            })
+        },
+        onSuccess: (data: any) => {
+            notification.success({
+                message: 'Đã từ chối yêu cầu giải quyết'
+            })
+            okFn && okFn(data)
+        },
+        onError: (error: any) => {
+            errFn && errFn()
+            notification.error({
+                message: error.message || "Có lỗi xảy ra"
+            })
+        }
+    })
+}
+
+export const useDenyProcessGoing = (okFn?: Function, errFn?: Function) => {
+    return useMutation({
+        mutationFn: async(body: IDenyProcessGoing) => {
+            return await axios.post(BASE_URL + '/going/request-process/deny',  body, {
                 headers: {
                     "Authorization": 'Bearer ' + body.token
                 }

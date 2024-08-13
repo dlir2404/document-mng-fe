@@ -24,6 +24,7 @@ import AcceptDraft from "../../shared/components/modals/accept-draft";
 import DenyDraft from "../../shared/components/modals/deny-draft";
 import RequestProcessGoing from "../../shared/components/modals/request-process-going";
 import AcceptProcessGoing from "../../shared/components/modals/accept-process-going";
+import DenyProcessGoing from "../../shared/components/modals/deny-process-going";
 
 const exchangeRoleName = (role: number): string => {
   switch (role) {
@@ -54,6 +55,7 @@ export default function Home() {
 
   const [isRequestProccessGoing, setIsRequestProccessGoing] = useState(false)
   const [isAcceptProccessGoing, setIsAcceptProccessGoing] = useState(false)
+  const [isDenyProccessGoing, setIsDenyProccessGoing] = useState(false)
 
   const [status, setStatus] = useState<string[] | undefined>()
 
@@ -199,6 +201,7 @@ export default function Home() {
                 <Button
                   onClick={() => {
                     setDocumentId(record.id)
+                    setIsDenyProccessGoing(true)
                   }}
                 >Trả lại lãnh đạo</Button>
               </div>
@@ -463,6 +466,7 @@ export default function Home() {
     
       <RequestProcessGoing documentId={documentId} onOk={() => { refetch() }} isOpen={isRequestProccessGoing} setIsOpen={setIsRequestProccessGoing}></RequestProcessGoing>
       <AcceptProcessGoing documentId={documentId} onOk={() => { refetch() }} isOpen={isAcceptProccessGoing} setIsOpen={setIsAcceptProccessGoing}></AcceptProcessGoing>
+      <DenyProcessGoing documentId={documentId} onOk={() => { refetch() }} isOpen={isDenyProccessGoing} setIsOpen={setIsDenyProccessGoing}></DenyProcessGoing>
     </>
   );
 }

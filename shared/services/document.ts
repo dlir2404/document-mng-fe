@@ -27,6 +27,17 @@ export interface IUploadIncomeBody {
     token?: string;
 }
 
+export interface ICompleteProcessGoing {
+    file: any;
+    documentId?: number;
+    sendFrom?: string;
+    category?: string;
+    emergencyLevel?: string;
+    thematic?: string;
+    abstract?: string;
+    token?: string;
+}
+
 export interface IUploadDraftBody {
     file: any;
     abstract?: string;
@@ -127,6 +138,27 @@ export const useUploadIncomeDocument = (okFn?: Function, errFn?: Function) => {
         mutationFn: async (body: IUploadIncomeBody) => {
             console.log(body.token)
             return await axios.post(BASE_URL + '/income/upload', body, {
+                headers: {
+                    'Authorization': 'Bearer ' + body.token,
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        },
+        onSuccess: (data: any) => {
+            okFn && okFn()
+        },
+        onError: (error: any) => {
+            errFn && errFn(error.response?.data?.message || "Có lỗi xảy ra")
+            console.log(error)
+        }
+    })
+}
+
+export const useCompleteProcessGoing = (okFn?: Function, errFn?: Function) => {
+    return useMutation({
+        mutationFn: async (body: ICompleteProcessGoing) => {
+            console.log(body.token)
+            return await axios.post(BASE_URL + '/going/process/complete', body, {
                 headers: {
                     'Authorization': 'Bearer ' + body.token,
                     'Content-Type': 'multipart/form-data'

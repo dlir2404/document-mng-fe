@@ -23,6 +23,7 @@ import DeleteIncome from "../../shared/components/modals/delete-income";
 import AcceptDraft from "../../shared/components/modals/accept-draft";
 import DenyDraft from "../../shared/components/modals/deny-draft";
 import RequestProcessGoing from "../../shared/components/modals/request-process-going";
+import AcceptProcessGoing from "../../shared/components/modals/accept-process-going";
 
 const exchangeRoleName = (role: number): string => {
   switch (role) {
@@ -52,6 +53,7 @@ export default function Home() {
   const [isDenyDraft, setIsDenyDraft] = useState(false)
 
   const [isRequestProccessGoing, setIsRequestProccessGoing] = useState(false)
+  const [isAcceptProccessGoing, setIsAcceptProccessGoing] = useState(false)
 
   const [status, setStatus] = useState<string[] | undefined>()
 
@@ -191,6 +193,7 @@ export default function Home() {
                 <Button type="primary" className="mb-4 mr-4"
                   onClick={() => {
                     setDocumentId(record.id)
+                    setIsAcceptProccessGoing(true)
                   }}
                 >Tiếp nhận</Button>
                 <Button
@@ -459,7 +462,7 @@ export default function Home() {
       <DenyDraft documentId={documentId} onOk={() => { refetch() }} isOpen={isDenyDraft} setIsOpen={setIsDenyDraft}></DenyDraft>
     
       <RequestProcessGoing documentId={documentId} onOk={() => { refetch() }} isOpen={isRequestProccessGoing} setIsOpen={setIsRequestProccessGoing}></RequestProcessGoing>
-    
+      <AcceptProcessGoing documentId={documentId} onOk={() => { refetch() }} isOpen={isAcceptProccessGoing} setIsOpen={setIsAcceptProccessGoing}></AcceptProcessGoing>
     </>
   );
 }

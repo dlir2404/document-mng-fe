@@ -71,7 +71,7 @@ export const OPTIONS = {
             },
             {
                 label: 'Chờ tiếp nhận',
-                value: ['ASSIGNED_FOR_PROCESS']
+                value: ['ASSIGNMENT_FOR_PROCESS']
             },
             {
                 label: 'Đang giải quyết',

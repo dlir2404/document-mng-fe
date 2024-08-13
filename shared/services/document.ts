@@ -75,6 +75,11 @@ export interface IAcceptDraft {
     token?: string;
 }
 
+export interface IAcceptProcessGoing {
+    documentId?: number;
+    token?: string;
+}
+
 export interface IDeleteIncome {
     documentId?: number;
     token?: string;
@@ -264,6 +269,30 @@ export const useAcceptDraft = (okFn?: Function, errFn?: Function) => {
         onSuccess: (data: any) => {
             notification.success({
                 message: 'Đã phê duyệt dự thảo'
+            })
+            okFn && okFn(data)
+        },
+        onError: (error: any) => {
+            errFn && errFn()
+            notification.error({
+                message: error.message || "Có lỗi xảy ra"
+            })
+        }
+    })
+}
+
+export const useAcceptProcessGoing = (okFn?: Function, errFn?: Function) => {
+    return useMutation({
+        mutationFn: async(body: IAcceptProcessGoing) => {
+            return await axios.post(BASE_URL + '/going/request-process/accept',  body, {
+                headers: {
+                    "Authorization": 'Bearer ' + body.token
+                }
+            })
+        },
+        onSuccess: (data: any) => {
+            notification.success({
+                message: 'Đã tiếp nhận xử lý văn bản'
             })
             okFn && okFn(data)
         },

@@ -392,7 +392,7 @@ export default function Home() {
       render: (value: any) => <p>{value?.username}</p>
     },
     {
-      title: 'Phối hợp xử lý',
+      title: goingAttribute['collaborators'],
       // dataIndex: 'arrivalDate',
       // key: 'arrivalDate',
     },

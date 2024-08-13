@@ -6,6 +6,8 @@ import { formatDate } from "../../utils/formatDate";
 import Image from "next/image";
 import Link from "next/link";
 import { handlePdfLink } from "../../utils/handlePdfLink";
+import { useGetDocumentTicket } from "../../services/document";
+import { useAppContext } from "@/app/app-provider";
 
 const DocumentDetail = ({
     isOpen,
@@ -17,8 +19,35 @@ const DocumentDetail = ({
     document?: any
 }) => {
     const tabsContext = useTabsContext()
+    const appContext = useAppContext()
+
+    const { data } = useGetDocumentTicket({
+        documentId: document?.id,
+        type: tabsContext.tabKey
+    }, appContext.token)
+
     const handleCancel = () => {
         setIsOpen(false)
+    }
+
+    const handleShowTicketTitle = () => {
+        if (!data) return ''
+
+        if (data?.draftTicket) {
+            return 'Phiếu yêu cầu xử lý văn bản đến'
+        }
+
+        return 'Phiếu chỉ đạo xử lý văn bản đến'
+    }
+
+    const handleShowTicketLabel = () => {
+        if (!data) return ''
+
+        if (data?.draftTicket) {
+            return 'Số phiếu yêu cầu xử lý văn bản đến'
+        }
+
+        return 'Số phiếu chỉ đạo xử lý văn bản đến'
     }
 
     return (
@@ -99,6 +128,42 @@ const DocumentDetail = ({
                             </Form.Item>
                         </Col>
                     </Row>
+                    {data && (
+                        <>
+                            <Row className="justify-center mt-4">
+                                <div className="font-bold">{handleShowTicketTitle()}</div>
+                            </Row>
+                            <Form
+                                layout="vertical"
+                                style={{ maxWidth: 1200 }}
+                            >
+                                <Row gutter={16}>
+                                    <Col span={12}>
+                                        <Form.Item label={handleShowTicketLabel()}>
+                                            <Input disabled value={data?.draftTicket ? data?.draftTicket.id : data.commandTicket?.id || ''}></Input>
+                                        </Form.Item>
+                                    </Col>
+                                    <Col span={12}>
+                                        <Form.Item label={incomeAttribute['deadline']}>
+                                            <Input disabled value={formatDate(document?.deadline)}></Input>
+                                        </Form.Item>
+                                    </Col>
+                                    <Col span={24}>
+                                        <Form.Item label={'Nội dung phương hướng xử lý'}>
+                                            <Input disabled value={data?.draftTicket ? data?.draftTicket.processDirection : data.commandTicket?.processDirection || ''}></Input>
+                                        </Form.Item>
+                                    </Col>
+                                    {(data?.draftTicket?.returnReason || data?.commandTicket?.returnReason) && (
+                                        <Col span={24}>
+                                            <Form.Item label={'Lý do trả lại'}>
+                                                <Input disabled value={data?.draftTicket?.returnReason || data?.commandTicket?.returnReason || ''}></Input>
+                                            </Form.Item>
+                                        </Col>
+                                    )}
+                                </Row>
+                            </Form>
+                        </>
+                    )}
                 </Form>
             </Modal>
             <Modal

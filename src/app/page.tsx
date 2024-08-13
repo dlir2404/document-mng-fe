@@ -513,7 +513,9 @@ export default function Home() {
           dataSource={data?.rows.map((row: any, index: number) => { return { key: index + 1, ...row } }) || []}
         />
       </div>
-      <DocumentDetail document={document} isOpen={detailModel} setIsOpen={setDetailModal}></DocumentDetail>
+      {document?.id && detailModel && (
+        <DocumentDetail document={document} isOpen={detailModel} setIsOpen={setDetailModal}></DocumentDetail>
+      )}
 
       <UploadIncomeModal onOk={() => { refetch() }} isOpen={isIncomeModalOpen} setIsOpen={setIsIncomeModalOpen}></UploadIncomeModal>
       <PresentToLeaderModal documentId={document?.id} onOk={() => { refetch() }} isOpen={isPresentModalOpen} setIsOpen={setIsPresentModalOpen}></PresentToLeaderModal>
@@ -524,7 +526,7 @@ export default function Home() {
       <DeleteIncome documentId={document?.id} onOk={() => { refetch() }} isOpen={isDeleteProccessIncome} setIsOpen={setIsDeleteProccessIncome}></DeleteIncome>
       <AcceptDraft documentId={document?.id} onOk={() => { refetch() }} isOpen={isAcceptDraft} setIsOpen={setIsAcceptDraft}></AcceptDraft>
       <DenyDraft documentId={document?.id} onOk={() => { refetch() }} isOpen={isDenyDraft} setIsOpen={setIsDenyDraft}></DenyDraft>
-    
+
       <RequestProcessGoing documentId={document?.id} onOk={() => { refetch() }} isOpen={isRequestProccessGoing} setIsOpen={setIsRequestProccessGoing}></RequestProcessGoing>
       <AcceptProcessGoing documentId={document?.id} onOk={() => { refetch() }} isOpen={isAcceptProccessGoing} setIsOpen={setIsAcceptProccessGoing}></AcceptProcessGoing>
       <DenyProcessGoing documentId={document?.id} onOk={() => { refetch() }} isOpen={isDenyProccessGoing} setIsOpen={setIsDenyProccessGoing}></DenyProcessGoing>

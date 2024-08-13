@@ -96,6 +96,11 @@ export interface IPublishGoingDocument {
     token?: string;
 }
 
+export interface IGetDocumentTicket {
+    type: string;
+    documentId?: number;
+}
+
 export interface IAcceptProcessGoing {
     documentId?: number;
     token?: string;
@@ -135,6 +140,27 @@ export const useGetListDocument = (params: IDocumentParams, token: string) => {
                     status: params.status,
                     from: params.from,
                     to: params.to
+                }
+            })
+
+            return result.data
+        }
+    })
+}
+
+export const useGetDocumentTicket = (params: IGetDocumentTicket, token: string) => {
+    return useQuery({
+        queryKey: ['document', params],
+        queryFn: async () => {
+            let endpoint = BASE_URL || process.env.NEXT_PUBLIC_API || 'http://localhost:3000/api'
+            endpoint += params.type === 'income-document' ? '/income/document/ticket' : '/going/document/ticket'
+
+            const result = await axios.get(endpoint, {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                },
+                params: {
+                    id: params.documentId
                 }
             })
 

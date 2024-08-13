@@ -28,7 +28,7 @@ export const goingAttribute = {
     "emergencyLevel": "Độ khẩn",
     "thematic": "Chuyên đề",
     "leader": "Lãnh đạo giao việc",
-    "mainProcessor": "Chủ trì xử lý",
+    "mainProcessor": "Chủ trì giải quyết",
     "collaborators": "Phối hợp giải quyết",
     "category": "Thể loại",
     "abstract": "Trích yếu",

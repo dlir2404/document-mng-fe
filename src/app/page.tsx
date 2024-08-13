@@ -27,6 +27,7 @@ import AcceptProcessGoing from "../../shared/components/modals/accept-process-go
 import DenyProcessGoing from "../../shared/components/modals/deny-process-going";
 import CompleteProcessGoing from "../../shared/components/modals/complete-process-going";
 import AcceptGoingDocument from "../../shared/components/modals/accept-going-document";
+import PublishGoingDocument from "../../shared/components/modals/publish-going-document";
 
 const exchangeRoleName = (role: number): string => {
   switch (role) {
@@ -60,6 +61,7 @@ export default function Home() {
   const [isDenyProccessGoing, setIsDenyProccessGoing] = useState(false)
   const [isCompleteProccessGoing, setIsCompleteProccessGoing] = useState(false)
   const [isAcceptGoing, setIsAcceptGoing] = useState(false)
+  const [isPublishGoing, setIsPublishGoing] = useState(false)
 
   const [status, setStatus] = useState<string[] | undefined>()
 
@@ -231,6 +233,7 @@ export default function Home() {
                 <Button
                   onClick={() => {
                     setDocumentId(record.id)
+                    setIsPublishGoing(true)
                   }}
                   className="mb-4 mr-4"
                 >Phát hành văn bản đi</Button>
@@ -289,14 +292,6 @@ export default function Home() {
       key: 'abstract',
     },
     {
-      title: incomeAttribute['status'],
-      dataIndex: 'status',
-      key: 'status',
-      render: (value: string) => {
-        return <Tag color={DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].INCOME[value].color}>{DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].INCOME[value].status}</Tag>
-      }
-    },
-    {
       title: incomeAttribute['sendFrom'],
       dataIndex: 'sendFrom',
       key: 'sendFrom',
@@ -311,6 +306,14 @@ export default function Home() {
       title: 'Phối hợp xử lý',
       // dataIndex: 'arrivalDate',
       // key: 'arrivalDate',
+    },
+    {
+      title: incomeAttribute['status'],
+      dataIndex: 'status',
+      key: 'status',
+      render: (value: string) => {
+        return <Tag color={DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].INCOME[value].color}>{DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].INCOME[value].status}</Tag>
+      }
     },
     {
       title: 'Hành động',
@@ -378,14 +381,6 @@ export default function Home() {
       key: 'abstract',
     },
     {
-      title: goingAttribute['status'],
-      dataIndex: 'status',
-      key: 'status',
-      render: (value: string) => {
-        return <Tag color={DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].GOING[value].color}>{DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].GOING[value].status}</Tag>
-      }
-    },
-    {
       title: goingAttribute['sendFrom'],
       dataIndex: 'sendFrom',
       key: 'sendFrom',
@@ -400,6 +395,14 @@ export default function Home() {
       title: 'Phối hợp xử lý',
       // dataIndex: 'arrivalDate',
       // key: 'arrivalDate',
+    },
+    {
+      title: goingAttribute['status'],
+      dataIndex: 'status',
+      key: 'status',
+      render: (value: string) => {
+        return <Tag color={DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].GOING[value].color}>{DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].GOING[value].status}</Tag>
+      }
     },
     {
       title: 'Hành động',
@@ -475,6 +478,7 @@ export default function Home() {
       <DenyProcessGoing documentId={documentId} onOk={() => { refetch() }} isOpen={isDenyProccessGoing} setIsOpen={setIsDenyProccessGoing}></DenyProcessGoing>
       <CompleteProcessGoing documentId={documentId} onOk={() => { refetch() }} isOpen={isCompleteProccessGoing} setIsOpen={setIsCompleteProccessGoing}></CompleteProcessGoing>
       <AcceptGoingDocument documentId={documentId} onOk={() => { refetch() }} isOpen={isAcceptGoing} setIsOpen={setIsAcceptGoing}></AcceptGoingDocument>
+      <PublishGoingDocument documentId={documentId} onOk={() => { refetch() }} isOpen={isPublishGoing} setIsOpen={setIsPublishGoing}></PublishGoingDocument>
     </>
   );
 }

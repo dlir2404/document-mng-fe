@@ -91,6 +91,11 @@ export interface IAcceptGoingDocument {
     token?: string;
 }
 
+export interface IPublishGoingDocument {
+    documentId?: number;
+    token?: string;
+}
+
 export interface IAcceptProcessGoing {
     documentId?: number;
     token?: string;
@@ -336,6 +341,30 @@ export const useAcceptGoingDocument = (okFn?: Function, errFn?: Function) => {
         onSuccess: (data: any) => {
             notification.success({
                 message: 'Đã phê duyệt văn bản đi'
+            })
+            okFn && okFn(data)
+        },
+        onError: (error: any) => {
+            errFn && errFn()
+            notification.error({
+                message: error.message || "Có lỗi xảy ra"
+            })
+        }
+    })
+}
+
+export const usePublishGoingDocument = (okFn?: Function, errFn?: Function) => {
+    return useMutation({
+        mutationFn: async(body: IPublishGoingDocument) => {
+            return await axios.post(BASE_URL + '/going/document/publish',  body, {
+                headers: {
+                    "Authorization": 'Bearer ' + body.token
+                }
+            })
+        },
+        onSuccess: (data: any) => {
+            notification.success({
+                message: 'Đã phát hành văn bản đi'
             })
             okFn && okFn(data)
         },

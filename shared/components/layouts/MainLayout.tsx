@@ -102,7 +102,6 @@ export default function MainLayout({
                     style={{
                         padding: 24,
                         minHeight: "calc(100vh - 133px)",
-                        // background: colorBgContainer,
                         borderRadius: '10px',
                     }}
                 >

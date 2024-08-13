@@ -33,9 +33,9 @@ const LoginPage = () => {
     }
 
     return (
-        <div className="flex items-center justify-center fixed top-0 left-0 right-0 bottom-0">
-            <div className="p-4 border-2 rounded-lg border-gray-400">
-                <div className="text-center pb-4 font-bold text-lg">Đăng nhập</div>
+        <div style={{ background: 'url("/background.jpg")', backgroundSize: 'cover'}} className="flex items-center justify-center fixed top-0 left-0 right-0 bottom-0">
+            <div className="p-4 border-2 rounded-lg border-gray-400 bg-white">
+                <div className="text-center pb-4 font-bold text-lg ">Đăng nhập</div>
             <Form
                 name="basic"
                 labelCol={{ span: 8 }}

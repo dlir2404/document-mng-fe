@@ -231,7 +231,7 @@ export const usePresentToLeader = (okFn?: Function, errFn?: Function) => {
         onError: (error: any) => {
             errFn && errFn()
             notification.error({
-                message: error.message || "Có lỗi xảy ra"
+                message: error.response.data.message || 'Có lỗi xảy ra'
             })
         }
     })
@@ -255,7 +255,7 @@ export const useRequestProcessIncome = (okFn?: Function, errFn?: Function) => {
         onError: (error: any) => {
             errFn && errFn()
             notification.error({
-                message: error.message || "Có lỗi xảy ra"
+                message: error.response.data.message || 'Có lỗi xảy ra'
             })
         }
     })
@@ -279,7 +279,7 @@ export const useRequestProcessGoing = (okFn?: Function, errFn?: Function) => {
         onError: (error: any) => {
             errFn && errFn()
             notification.error({
-                message: error.message || "Có lỗi xảy ra"
+                message: error.response.data.message || 'Có lỗi xảy ra'
             })
         }
     })
@@ -303,7 +303,7 @@ export const useDenyDraft = (okFn?: Function, errFn?: Function) => {
         onError: (error: any) => {
             errFn && errFn()
             notification.error({
-                message: error.message || "Có lỗi xảy ra"
+                message: error.response.data.message || 'Có lỗi xảy ra'
             })
         }
     })
@@ -327,7 +327,7 @@ export const useAcceptProcessIncome = (okFn?: Function, errFn?: Function) => {
         onError: (error: any) => {
             errFn && errFn()
             notification.error({
-                message: error.message || "Có lỗi xảy ra"
+                message: error.response.data.message || 'Có lỗi xảy ra'
             })
         }
     })
@@ -351,7 +351,7 @@ export const useAcceptDraft = (okFn?: Function, errFn?: Function) => {
         onError: (error: any) => {
             errFn && errFn()
             notification.error({
-                message: error.message || "Có lỗi xảy ra"
+                message: error.response.data.message || "Có lỗi xảy ra"
             })
         }
     })

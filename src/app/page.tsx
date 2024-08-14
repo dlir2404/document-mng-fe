@@ -70,6 +70,7 @@ export default function Home() {
   const [isUploadBtn, setIsUploadBtn] = useState(true)
   const [status, setStatus] = useState<string[] | undefined>()
   const [query, setQuery] = useState()
+  const [page, setPage] = useState<number | undefined>(1)
 
   useGetProfile(appContext.token, (user: any) => {
     appContext.setUser(user)
@@ -275,7 +276,9 @@ export default function Home() {
   const { data, refetch, isLoading } = useGetListDocument({
     type: tabsContext.tabKey,
     status: status,
-    query: query
+    query: query,
+    page: page || 1,
+    pageSize: 10
   }, appContext.token)
 
   const columnsIncome = [
@@ -522,7 +525,12 @@ export default function Home() {
               }
             }
           }}
+          onChange={(e) => setPage(e.current)}
           dataSource={data?.rows.map((row: any, index: number) => { return { key: index + 1, ...row } }) || []}
+          pagination={{
+            total: data?.count,
+            pageSize: 10
+          }}
         />
       </div>
       {document?.id && detailModel && (

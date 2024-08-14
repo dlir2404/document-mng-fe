@@ -46,8 +46,8 @@ const UploadIncomeModal = ({
 
     const handleFinish = (values: any) => {
         values.file = values.file.file.originFileObj
-        values.arrivalDate = values.arrivalDate.toISOString()
-        values.signDate = values.signDate.toISOString()
+        values.arrivalDate = values.arrivalDate?.toISOString()
+        values.signDate = values.signDate?.toISOString()
 
         setIsConfirmLoading(true)
         upload.mutate({
@@ -108,7 +108,7 @@ const UploadIncomeModal = ({
                                 <Input />
                             </Form.Item>
                             <Form.Item label={incomeAttribute['category']} name='category'>
-                                <Select 
+                                <Select
                                     options={[
                                         {
                                             label: 'Công văn',

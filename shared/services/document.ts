@@ -10,6 +10,7 @@ export interface IDocumentParams {
     pageSize?: number;
     from?: string;
     to?: string;
+    query?: string
 }
 
 export interface IUploadIncomeBody {
@@ -139,7 +140,8 @@ export const useGetListDocument = (params: IDocumentParams, token: string) => {
                     pageSize: params.pageSize || 10,
                     status: params.status,
                     from: params.from,
-                    to: params.to
+                    to: params.to,
+                    query: params.query
                 }
             })
 
@@ -213,8 +215,8 @@ export const useCompleteProcessGoing = (okFn?: Function, errFn?: Function) => {
 
 export const usePresentToLeader = (okFn?: Function, errFn?: Function) => {
     return useMutation({
-        mutationFn: async(body: IPresentToLeader) => {
-            return await axios.post(BASE_URL + '/income/present-to-leader',  body, {
+        mutationFn: async (body: IPresentToLeader) => {
+            return await axios.post(BASE_URL + '/income/present-to-leader', body, {
                 headers: {
                     "Authorization": 'Bearer ' + body.token
                 }
@@ -237,8 +239,8 @@ export const usePresentToLeader = (okFn?: Function, errFn?: Function) => {
 
 export const useRequestProcessIncome = (okFn?: Function, errFn?: Function) => {
     return useMutation({
-        mutationFn: async(body: IRequestProcessIncome) => {
-            return await axios.post(BASE_URL + '/income/request-process',  body, {
+        mutationFn: async (body: IRequestProcessIncome) => {
+            return await axios.post(BASE_URL + '/income/request-process', body, {
                 headers: {
                     "Authorization": 'Bearer ' + body.token
                 }
@@ -261,8 +263,8 @@ export const useRequestProcessIncome = (okFn?: Function, errFn?: Function) => {
 
 export const useRequestProcessGoing = (okFn?: Function, errFn?: Function) => {
     return useMutation({
-        mutationFn: async(body: IRequestProcessGoing) => {
-            return await axios.post(BASE_URL + '/going/request-process',  body, {
+        mutationFn: async (body: IRequestProcessGoing) => {
+            return await axios.post(BASE_URL + '/going/request-process', body, {
                 headers: {
                     "Authorization": 'Bearer ' + body.token
                 }
@@ -285,8 +287,8 @@ export const useRequestProcessGoing = (okFn?: Function, errFn?: Function) => {
 
 export const useDenyDraft = (okFn?: Function, errFn?: Function) => {
     return useMutation({
-        mutationFn: async(body: IDenyDraft) => {
-            return await axios.post(BASE_URL + '/income/draft/deny',  body, {
+        mutationFn: async (body: IDenyDraft) => {
+            return await axios.post(BASE_URL + '/income/draft/deny', body, {
                 headers: {
                     "Authorization": 'Bearer ' + body.token
                 }
@@ -309,8 +311,8 @@ export const useDenyDraft = (okFn?: Function, errFn?: Function) => {
 
 export const useAcceptProcessIncome = (okFn?: Function, errFn?: Function) => {
     return useMutation({
-        mutationFn: async(body: IAcceptProcessIncome) => {
-            return await axios.post(BASE_URL + '/income/request-process/accept',  body, {
+        mutationFn: async (body: IAcceptProcessIncome) => {
+            return await axios.post(BASE_URL + '/income/request-process/accept', body, {
                 headers: {
                     "Authorization": 'Bearer ' + body.token
                 }
@@ -333,8 +335,8 @@ export const useAcceptProcessIncome = (okFn?: Function, errFn?: Function) => {
 
 export const useAcceptDraft = (okFn?: Function, errFn?: Function) => {
     return useMutation({
-        mutationFn: async(body: IAcceptDraft) => {
-            return await axios.post(BASE_URL + '/income/draft/accept',  body, {
+        mutationFn: async (body: IAcceptDraft) => {
+            return await axios.post(BASE_URL + '/income/draft/accept', body, {
                 headers: {
                     "Authorization": 'Bearer ' + body.token
                 }
@@ -357,8 +359,8 @@ export const useAcceptDraft = (okFn?: Function, errFn?: Function) => {
 
 export const useAcceptGoingDocument = (okFn?: Function, errFn?: Function) => {
     return useMutation({
-        mutationFn: async(body: IAcceptGoingDocument) => {
-            return await axios.post(BASE_URL + '/going/document/accept',  body, {
+        mutationFn: async (body: IAcceptGoingDocument) => {
+            return await axios.post(BASE_URL + '/going/document/accept', body, {
                 headers: {
                     "Authorization": 'Bearer ' + body.token
                 }
@@ -381,8 +383,8 @@ export const useAcceptGoingDocument = (okFn?: Function, errFn?: Function) => {
 
 export const usePublishGoingDocument = (okFn?: Function, errFn?: Function) => {
     return useMutation({
-        mutationFn: async(body: IPublishGoingDocument) => {
-            return await axios.post(BASE_URL + '/going/document/publish',  body, {
+        mutationFn: async (body: IPublishGoingDocument) => {
+            return await axios.post(BASE_URL + '/going/document/publish', body, {
                 headers: {
                     "Authorization": 'Bearer ' + body.token
                 }
@@ -405,8 +407,8 @@ export const usePublishGoingDocument = (okFn?: Function, errFn?: Function) => {
 
 export const useAcceptProcessGoing = (okFn?: Function, errFn?: Function) => {
     return useMutation({
-        mutationFn: async(body: IAcceptProcessGoing) => {
-            return await axios.post(BASE_URL + '/going/request-process/accept',  body, {
+        mutationFn: async (body: IAcceptProcessGoing) => {
+            return await axios.post(BASE_URL + '/going/request-process/accept', body, {
                 headers: {
                     "Authorization": 'Bearer ' + body.token
                 }
@@ -429,7 +431,7 @@ export const useAcceptProcessGoing = (okFn?: Function, errFn?: Function) => {
 
 export const useDeleteIncome = (okFn?: Function, errFn?: Function) => {
     return useMutation({
-        mutationFn: async(body: IDeleteIncome) => {
+        mutationFn: async (body: IDeleteIncome) => {
             return await axios.delete(BASE_URL + `/income/${body.documentId}`, {
                 headers: {
                     "Authorization": 'Bearer ' + body.token
@@ -453,8 +455,8 @@ export const useDeleteIncome = (okFn?: Function, errFn?: Function) => {
 
 export const useDenyProcessIncome = (okFn?: Function, errFn?: Function) => {
     return useMutation({
-        mutationFn: async(body: IDenyProcessIncome) => {
-            return await axios.post(BASE_URL + '/income/request-process/deny',  body, {
+        mutationFn: async (body: IDenyProcessIncome) => {
+            return await axios.post(BASE_URL + '/income/request-process/deny', body, {
                 headers: {
                     "Authorization": 'Bearer ' + body.token
                 }
@@ -477,8 +479,8 @@ export const useDenyProcessIncome = (okFn?: Function, errFn?: Function) => {
 
 export const useDenyProcessGoing = (okFn?: Function, errFn?: Function) => {
     return useMutation({
-        mutationFn: async(body: IDenyProcessGoing) => {
-            return await axios.post(BASE_URL + '/going/request-process/deny',  body, {
+        mutationFn: async (body: IDenyProcessGoing) => {
+            return await axios.post(BASE_URL + '/going/request-process/deny', body, {
                 headers: {
                     "Authorization": 'Bearer ' + body.token
                 }

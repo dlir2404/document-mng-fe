@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "./app-provider";
 import { useRouter } from "next/navigation";
-import { Button, notification, Radio, Table, Tag } from "antd";
+import { Button, Input, notification, Radio, Table, Tag } from "antd";
 import { useTabsContext } from "../../shared/components/layouts/MainLayout";
 import { DOCUMENT_STATUS, OPTIONS } from "../../shared/constants/tabs";
 import { useGetListDocument } from "../../shared/services/document";
@@ -28,6 +28,8 @@ import CompleteProcessGoing from "../../shared/components/modals/complete-proces
 import AcceptGoingDocument from "../../shared/components/modals/accept-going-document";
 import PublishGoingDocument from "../../shared/components/modals/publish-going-document";
 import DocumentDetail from "../../shared/components/modals/document-detail";
+import { debounce } from "lodash"
+import { SearchOutlined } from "@ant-design/icons";
 
 const exchangeRoleName = (role: number): string => {
   switch (role) {
@@ -67,6 +69,7 @@ export default function Home() {
 
   const [isUploadBtn, setIsUploadBtn] = useState(true)
   const [status, setStatus] = useState<string[] | undefined>()
+  const [query, setQuery] = useState()
 
   useGetProfile(appContext.token, (user: any) => {
     appContext.setUser(user)
@@ -271,7 +274,8 @@ export default function Home() {
 
   const { data, refetch, isLoading } = useGetListDocument({
     type: tabsContext.tabKey,
-    status: status
+    status: status,
+    query: query
   }, appContext.token)
 
   const columnsIncome = [
@@ -498,6 +502,14 @@ export default function Home() {
           buttonStyle="solid"
           className="mb-4"
         />
+        <div className="inline-block float-right">
+          <Input
+            onChange={debounce((e) => setQuery(e.currentTarget.value), 300)}
+            placeholder="Nhập từ khoá"
+            className="min-w-[400px]"
+            allowClear
+            prefix={<SearchOutlined />} />
+        </div>
         <Table
           loading={isLoading}
           columns={tabsContext.tabKey === 'income-document' ? columnsIncome : tabsContext.tabKey === 'going-document' ? columnsGoing : []}

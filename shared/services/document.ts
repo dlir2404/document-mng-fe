@@ -248,7 +248,7 @@ export const useRequestProcessIncome = (okFn?: Function, errFn?: Function) => {
         },
         onSuccess: (data: any) => {
             notification.success({
-                message: 'Yêu cầu giải quyết thành công'
+                message: 'Yêu cầu xử lý thành công'
             })
             okFn && okFn(data)
         },

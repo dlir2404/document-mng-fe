@@ -129,7 +129,7 @@ const DocumentDetail = ({
                         </Col>
                     </Row>
                 </Form>
-                {data && (
+                {data && (data.commandTicket || data.draftTicket) && (
                     <>
                         <Form
                             layout="vertical"
@@ -146,7 +146,7 @@ const DocumentDetail = ({
                                 </Col>
                                 <Col span={12}>
                                     <Form.Item label={incomeAttribute['deadline']}>
-                                        <Input disabled value={formatDate(document?.deadline)}></Input>
+                                        <Input disabled value={formatDate(data?.draftTicket?.deadline || data?.commandTicket?.deadline)}></Input>
                                     </Form.Item>
                                 </Col>
                                 <Col span={24}>

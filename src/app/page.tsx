@@ -506,7 +506,7 @@ export default function Home() {
           <Input
             onChange={debounce((e) => setQuery(e.currentTarget.value), 300)}
             placeholder="Nhập từ khoá"
-            className="min-w-[400px]"
+            className={tabsContext.tabKey === 'income-document' ? "min-w-[400px]" : 'min-w-[400px]'}
             allowClear
             prefix={<SearchOutlined />} />
         </div>

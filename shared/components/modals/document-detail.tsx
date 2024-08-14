@@ -128,43 +128,43 @@ const DocumentDetail = ({
                             </Form.Item>
                         </Col>
                     </Row>
-                    {data && (
-                        <>
-                            <Row className="justify-center mt-4">
+                </Form>
+                {data && (
+                    <>
+                        <Form
+                            layout="vertical"
+                            style={{ maxWidth: 1200 }}
+                        >
+                            <Row className="justify-center my-4">
                                 <div className="font-bold">{handleShowTicketTitle()}</div>
                             </Row>
-                            <Form
-                                layout="vertical"
-                                style={{ maxWidth: 1200 }}
-                            >
-                                <Row gutter={16}>
-                                    <Col span={12}>
-                                        <Form.Item label={handleShowTicketLabel()}>
-                                            <Input disabled value={data?.draftTicket ? data?.draftTicket.id : data.commandTicket?.id || ''}></Input>
-                                        </Form.Item>
-                                    </Col>
-                                    <Col span={12}>
-                                        <Form.Item label={incomeAttribute['deadline']}>
-                                            <Input disabled value={formatDate(document?.deadline)}></Input>
-                                        </Form.Item>
-                                    </Col>
+                            <Row gutter={16}>
+                                <Col span={12}>
+                                    <Form.Item label={handleShowTicketLabel()}>
+                                        <Input disabled value={data?.draftTicket ? data?.draftTicket.id : data.commandTicket?.id || ''}></Input>
+                                    </Form.Item>
+                                </Col>
+                                <Col span={12}>
+                                    <Form.Item label={incomeAttribute['deadline']}>
+                                        <Input disabled value={formatDate(document?.deadline)}></Input>
+                                    </Form.Item>
+                                </Col>
+                                <Col span={24}>
+                                    <Form.Item label={'Nội dung phương hướng xử lý'}>
+                                        <Input disabled value={data?.draftTicket ? data?.draftTicket.processDirection : data.commandTicket?.processDirection || ''}></Input>
+                                    </Form.Item>
+                                </Col>
+                                {(data?.draftTicket?.returnReason || data?.commandTicket?.returnReason) && (
                                     <Col span={24}>
-                                        <Form.Item label={'Nội dung phương hướng xử lý'}>
-                                            <Input disabled value={data?.draftTicket ? data?.draftTicket.processDirection : data.commandTicket?.processDirection || ''}></Input>
+                                        <Form.Item label={'Lý do trả lại'}>
+                                            <Input disabled value={data?.draftTicket?.returnReason || data?.commandTicket?.returnReason || ''}></Input>
                                         </Form.Item>
                                     </Col>
-                                    {(data?.draftTicket?.returnReason || data?.commandTicket?.returnReason) && (
-                                        <Col span={24}>
-                                            <Form.Item label={'Lý do trả lại'}>
-                                                <Input disabled value={data?.draftTicket?.returnReason || data?.commandTicket?.returnReason || ''}></Input>
-                                            </Form.Item>
-                                        </Col>
-                                    )}
-                                </Row>
-                            </Form>
-                        </>
-                    )}
-                </Form>
+                                )}
+                            </Row>
+                        </Form>
+                    </>
+                )}
             </Modal>
             <Modal
                 width={1200}

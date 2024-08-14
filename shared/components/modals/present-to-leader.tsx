@@ -71,7 +71,7 @@ const PresentToLeaderModal = ({
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item label='Độ khẩn' name='normal'>
+                            <Form.Item label='Độ khẩn' name='emergencyLevel'>
                                 <Select
                                     options={[
                                         {

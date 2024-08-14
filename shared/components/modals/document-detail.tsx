@@ -87,7 +87,7 @@ const DocumentDetail = ({
                                 <Input disabled value={document?.sendTo}></Input>
                             </Form.Item>
                             <Form.Item label={incomeAttribute['emergencyLevel']}>
-                                <Input disabled value={document?.emergencyLevel}></Input>
+                                <Input disabled value={document?.emergencyLevel === 'normal' ? 'Bình thường' : document?.emergencyLevel === 'emergency' ? 'Khẩn' : document?.emergencyLevel === 'super_emergency' ? 'Thượng khẩn' : ''}></Input>
                             </Form.Item>
                             <Form.Item label={incomeAttribute['thematic']}>
                                 <Input disabled value={document?.thematic}></Input>
@@ -198,7 +198,7 @@ const DocumentDetail = ({
                                 <Input disabled value={document?.sendTo}></Input>
                             </Form.Item>
                             <Form.Item label={goingAttribute['emergencyLevel']}>
-                                <Input disabled value={document?.emergencyLevel}></Input>
+                                <Input disabled value={document?.emergencyLevel === 'normal' ? 'Bình thường' : document?.emergencyLevel === 'emergency' ? 'Khẩn' : document?.emergencyLevel === 'super_emergency' ? 'Thượng khẩn' : ''}></Input>
                             </Form.Item>
                         </Col>
                         <Col span={12}>

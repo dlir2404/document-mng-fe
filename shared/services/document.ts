@@ -320,7 +320,7 @@ export const useAcceptProcessIncome = (okFn?: Function, errFn?: Function) => {
         },
         onSuccess: (data: any) => {
             notification.success({
-                message: 'Đã chấp nhận yêu cầu giải quyết'
+                message: 'Đã chấp nhận yêu cầu xử lý'
             })
             okFn && okFn(data)
         },

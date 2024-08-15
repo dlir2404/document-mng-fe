@@ -87,6 +87,7 @@ export default function Home() {
     } else {
       setIsUploadBtn(true)
     }
+    setStatus(undefined)
   }, [appContext.user, tabsContext.tabKey])
 
   const handleChangeTab = (event: any) => {
@@ -322,8 +323,9 @@ export default function Home() {
     },
     {
       title: 'Phối hợp xử lý',
-      // dataIndex: 'arrivalDate',
-      // key: 'arrivalDate',
+      dataIndex: 'collaborators',
+      key: 'collaborators',
+      render: (values: any[]) => <p>{values.map((collab) => collab.username).join(',')}</p>
     },
     {
       title: incomeAttribute['deadline'],
@@ -429,8 +431,9 @@ export default function Home() {
     },
     {
       title: goingAttribute['collaborators'],
-      // dataIndex: 'arrivalDate',
-      // key: 'arrivalDate',
+      dataIndex: 'collaborators',
+      key: 'collaborators',
+      render: (values: any[]) => <p>{values.map((collab) => collab.username).join(',')}</p>
     },
     {
       title: goingAttribute['deadline'],

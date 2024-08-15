@@ -82,7 +82,7 @@ const CompleteProcessGoing = ({
                             </Form.Item>
                         </Col>
                         <Col span={8}>
-                            <Form.Item label='Nơi nhận' name='sendFrom'>
+                            <Form.Item label='Nơi nhận' name='sendTo'>
                                 <Input></Input>
                             </Form.Item>
                             <Form.Item label='Thể loại' name='category'>
@@ -144,7 +144,7 @@ const CompleteProcessGoing = ({
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Form.Item label='Trích yếu dự thảo văn bản đi' name='abstract'>
+                    <Form.Item label='Trích yếu' name='abstract'>
                         <Input />
                     </Form.Item>
                 </Form>

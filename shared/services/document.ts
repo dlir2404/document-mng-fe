@@ -93,6 +93,7 @@ export interface IAcceptGoingDocument {
 }
 
 export interface IPublishGoingDocument {
+    number?: string;
     documentId?: number;
     token?: string;
 }

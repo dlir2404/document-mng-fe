@@ -31,6 +31,7 @@ import DocumentDetail from "../../shared/components/modals/document-detail";
 import { debounce } from "lodash"
 import { SearchOutlined } from "@ant-design/icons";
 import DenyGoingDocument from "../../shared/components/modals/deny-going-document";
+import UploadGoingDraft from "../../shared/components/modals/upload-going-draft";
 
 const exchangeRoleName = (role: number): string => {
   switch (role) {
@@ -61,6 +62,7 @@ export default function Home() {
   const [isAcceptDraft, setIsAcceptDraft] = useState(false)
   const [isDenyDraft, setIsDenyDraft] = useState(false)
 
+  const [isUploadDocumentDraft, setIsUploadDocumentDraft] = useState(false)
   const [isRequestProccessGoing, setIsRequestProccessGoing] = useState(false)
   const [isAcceptProccessGoing, setIsAcceptProccessGoing] = useState(false)
   const [isDenyProccessGoing, setIsDenyProccessGoing] = useState(false)
@@ -502,7 +504,20 @@ export default function Home() {
   return (
     <>
       <div>
-        {isUploadBtn && (<Button className="mr-4" onClick={() => setIsIncomeModalOpen(true)}>Upload</Button>)}
+        {isUploadBtn && (
+          <Button
+            className="mr-4"
+            onClick={() => {
+              if (tabsContext.tabKey === 'income-document') {
+                setIsIncomeModalOpen(true)
+              } else if (tabsContext.tabKey === 'going-document') {
+                setIsUploadDocumentDraft(true)
+              }
+            }}
+          >
+            Upload
+          </Button>
+        )}
         <Radio.Group
           options={options}
           onChange={handleChangeTab}
@@ -553,6 +568,7 @@ export default function Home() {
       <AcceptDraft documentId={document?.id} onOk={() => { refetch() }} isOpen={isAcceptDraft} setIsOpen={setIsAcceptDraft}></AcceptDraft>
       <DenyDraft documentId={document?.id} onOk={() => { refetch() }} isOpen={isDenyDraft} setIsOpen={setIsDenyDraft}></DenyDraft>
 
+      <UploadGoingDraft onOk={() => { refetch() }} isOpen={isUploadDocumentDraft} setIsOpen={setIsUploadDocumentDraft}></UploadGoingDraft>
       <RequestProcessGoing documentId={document?.id} onOk={() => { refetch() }} isOpen={isRequestProccessGoing} setIsOpen={setIsRequestProccessGoing}></RequestProcessGoing>
       <AcceptProcessGoing documentId={document?.id} onOk={() => { refetch() }} isOpen={isAcceptProccessGoing} setIsOpen={setIsAcceptProccessGoing}></AcceptProcessGoing>
       <DenyProcessGoing documentId={document?.id} onOk={() => { refetch() }} isOpen={isDenyProccessGoing} setIsOpen={setIsDenyProccessGoing}></DenyProcessGoing>

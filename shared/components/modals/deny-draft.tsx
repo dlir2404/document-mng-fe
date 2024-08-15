@@ -1,6 +1,6 @@
 'use client'
 import { Col, DatePicker, Form, Input, Modal, notification, Row, Select, Upload } from "antd";
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "antd/es/form/Form";
 import { useAppContext } from "@/app/app-provider";
 import { useGetListSpecialist } from "../../services/user";
@@ -22,6 +22,9 @@ const DenyDraft = ({
     const [isConfirmLoading, setIsConfirmLoading] = useState(false)
     const [room, setRoom] = useState()
     const appContext = useAppContext()
+    const [specialistOptions, setSpecialistOptions] = useState<any[]>([])
+    const [specialist, setSpecialist] = useState<number | undefined>()
+    const [collaboratorOptions, setCollaboratorOptions] = useState<any[]>([])
 
     const denyDraft = useDenyDraft(() => {
         setIsConfirmLoading(false)
@@ -34,6 +37,27 @@ const DenyDraft = ({
 
     const { data: rooms } = useGetListRoom()
     const { data: specialists } = useGetListSpecialist(room)
+
+    useEffect(() => {
+        if (!room) {
+            setSpecialistOptions([])
+        } else {
+            setSpecialistOptions(specialists?.data?.rows.map((specialist: any) => {
+                return {
+                    label: specialist.username,
+                    value: specialist.id
+                }
+            }) || [])
+        }
+    }, [room, specialists])
+
+    useEffect(() => {
+        if (!specialist) {
+            setCollaboratorOptions([])
+        } else {
+            setCollaboratorOptions(specialistOptions.filter((specialistOption) => specialistOption.value !== specialist))
+        }
+    }, [specialist])
 
     const handleCancel = () => {
         setIsOpen(false)
@@ -109,24 +133,14 @@ const DenyDraft = ({
                                 ]}
                             >
                                 <Select
-                                    options={specialists?.data?.rows.map((specialist: any) => {
-                                        return {
-                                            label: specialist.username,
-                                            value: specialist.id
-                                        }
-                                    }) || []}
+                                    options={specialistOptions}
+                                    onChange={(e) => setSpecialist(e)}
                                 />
                             </Form.Item>
                             <Form.Item label='Chọn chuyên viên phối hợp xử lý' name='collaborators' dependencies={['specialistId']}>
                                 <Select
                                     mode="multiple"
-                                    options={specialists?.data?.rows.map((specialist: any) => {
-                                        return {
-                                            label: specialist.username,
-                                            value: specialist.id,
-                                            disabled: specialist.id === form.getFieldValue('specialistId'),
-                                        }
-                                    }) || []}
+                                    options={collaboratorOptions}
                                 />
                             </Form.Item>
                         </Col>

@@ -5,7 +5,7 @@ import { notification } from "antd"
 
 export const useLogin = (okFn?: Function, errFn?: Function) => {
     return useMutation({
-        mutationFn: (params: {username: string, password: string}) => {
+        mutationFn: (params: { username: string, password: string }) => {
             return axios.post(BASE_URL + '/auth/login', { ...params })
         },
         onSuccess: (response) => {
@@ -45,7 +45,7 @@ export const useGetProfile = (token: string, onOk?: Function, onError?: Function
 export const useGetUserByRole = (role: number) => {
     return useQuery({
         queryKey: ['get_user_by_key'],
-        queryFn: async () =>  await axios.get(BASE_URL + `/user/all?role=${role}`),
+        queryFn: async () => await axios.get(BASE_URL + `/user/all?role=${role}`),
         onSuccess: (data) => {
             return data.data.data
         }
@@ -55,7 +55,7 @@ export const useGetUserByRole = (role: number) => {
 export const useGetListSpecialist = (roomId?: number) => {
     return useQuery({
         queryKey: ['get_specialists', roomId],
-        queryFn: async () =>  {
+        queryFn: async () => {
             let endpoint = BASE_URL + '/user/all?role=3'
 
             if (roomId) {

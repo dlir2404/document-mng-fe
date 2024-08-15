@@ -64,12 +64,30 @@ const RequestProcessGoing = ({
                             <Form.Item label='Số phiếu yêu cầu giải quyết văn bản đến'>
                                 <Input value={1} disabled></Input>
                             </Form.Item>
-                            <Form.Item label='Hạn giải quyết' name='deadline'>
+                            <Form.Item
+                                label='Hạn giải quyết'
+                                name='deadline'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <DatePicker />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item label='Chọn phòng'>
+                            <Form.Item
+                                label='Chọn phòng'
+                                name='roomId'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Select
                                     onChange={(value) => setRoom(value)}
                                     options={rooms?.data?.rows.map((room: any) => {
@@ -80,7 +98,16 @@ const RequestProcessGoing = ({
                                     })}
                                 />
                             </Form.Item>
-                            <Form.Item label='Chọn chuyên viên chủ trì giải quyết' name='specialistId'>
+                            <Form.Item
+                                label='Chọn chuyên viên chủ trì giải quyết'
+                                name='specialistId'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Select
                                     options={specialists?.data?.rows.map((specialist: any) => {
                                         return {
@@ -106,7 +133,16 @@ const RequestProcessGoing = ({
                     </Row>
                     <Row>
                         <Col span={24}>
-                            <Form.Item label='Nội dung phương hướng chỉ đạo giải quyết' name='processDirection'>
+                            <Form.Item
+                                label='Nội dung phương hướng chỉ đạo giải quyết'
+                                name='processDirection'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Input></Input>
                             </Form.Item>
                         </Col>

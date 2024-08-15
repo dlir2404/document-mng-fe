@@ -59,7 +59,16 @@ const PresentToLeaderModal = ({
                 >
                     <Row gutter={16}>
                         <Col span={12}>
-                            <Form.Item label='Chọn lãnh đạo cần trình' name='leaderId'>
+                            <Form.Item
+                                label='Chọn lãnh đạo cần trình'
+                                name='leaderId'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Select
                                     options={data?.data?.rows.map((row: any) => {
                                         return {
@@ -71,7 +80,16 @@ const PresentToLeaderModal = ({
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item label='Độ khẩn' name='emergencyLevel'>
+                            <Form.Item
+                                label='Độ khẩn'
+                                name='emergencyLevel'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Select
                                     options={[
                                         {

@@ -67,7 +67,16 @@ const CompleteProcessGoing = ({
                 >
                     <Row gutter={16}>
                         <Col span={8}>
-                            <Form.Item label="Upload" name='file'>
+                            <Form.Item
+                                label="Upload"
+                                name='file'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Upload
                                     accept=".pdf"
                                     maxCount={1}
@@ -82,10 +91,28 @@ const CompleteProcessGoing = ({
                             </Form.Item>
                         </Col>
                         <Col span={8}>
-                            <Form.Item label='Nơi nhận' name='sendTo'>
+                            <Form.Item
+                                label='Nơi nhận'
+                                name='sendTo'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Input></Input>
                             </Form.Item>
-                            <Form.Item label='Thể loại' name='category'>
+                            <Form.Item
+                                label='Thể loại'
+                                name='category'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Select
                                     options={[
                                         {
@@ -121,7 +148,16 @@ const CompleteProcessGoing = ({
                             </Form.Item>
                         </Col>
                         <Col span={8}>
-                            <Form.Item label='Độ khẩn' name='emergencyLevel'>
+                            <Form.Item
+                                label='Độ khẩn'
+                                name='emergencyLevel'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Select
                                     options={[
                                         {
@@ -144,7 +180,16 @@ const CompleteProcessGoing = ({
                             </Form.Item>
                         </Col>
                     </Row>
-                    <Form.Item label='Trích yếu' name='abstract'>
+                    <Form.Item
+                        label='Trích yếu'
+                        name='abstract'
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Không để trống trường này'
+                            }
+                        ]}
+                    >
                         <Input />
                     </Form.Item>
                 </Form>

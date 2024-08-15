@@ -66,7 +66,16 @@ const CompleteProcess = ({
                     style={{ maxWidth: 1200 }}
                     onFinish={handleFinish}
                 >
-                    <Form.Item label="Upload" name='file'>
+                    <Form.Item
+                        label="Upload"
+                        name='file'
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Vui lòng chọn file'
+                            }
+                        ]}
+                    >
                         <Upload
                             accept=".pdf"
                             maxCount={1}
@@ -79,7 +88,16 @@ const CompleteProcess = ({
                             <Button icon={<UploadOutlined />}>Upload</Button>
                         </Upload>
                     </Form.Item>
-                    <Form.Item label='Trích yếu dự thảo văn bản đi' name='abstractDraft'>
+                    <Form.Item
+                        label='Trích yếu dự thảo văn bản đi'
+                        name='abstractDraft'
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Không để trống trường này'
+                            }
+                        ]}
+                    >
                         <Input />
                     </Form.Item>
                 </Form>

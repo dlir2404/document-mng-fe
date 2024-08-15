@@ -55,7 +55,16 @@ const PublishGoingDocument = ({
                     style={{ maxWidth: 1200 }}
                     onFinish={handleFinish}
                 >
-                    <Form.Item label='Cấp số văn bản đi' name='number'>
+                    <Form.Item
+                        label='Cấp số văn bản đi'
+                        name='number'
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Không để trống trường này'
+                            }
+                        ]}
+                    >
                         <Input ></Input>
                     </Form.Item>
                 </Form>

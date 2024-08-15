@@ -65,7 +65,16 @@ const UploadIncomeModal = ({
                     onFinish={handleFinish}
                 >
                     <Row>
-                        <Form.Item label="Upload" name='file'>
+                        <Form.Item
+                            label="Upload"
+                            name='file'
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Vui lòng chọn file'
+                                }
+                            ]}
+                        >
                             <Upload
                                 accept=".pdf"
                                 maxCount={1}
@@ -81,33 +90,105 @@ const UploadIncomeModal = ({
                     </Row>
                     <Row gutter={16}>
                         <Col span={12}>
-                            <Form.Item label={incomeAttribute['originalNumber']} name='originalNumber'>
+                            <Form.Item
+                                label={incomeAttribute['originalNumber']}
+                                name='originalNumber'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Input />
                             </Form.Item>
-                            <Form.Item label={incomeAttribute['number']} name='number'>
+                            <Form.Item
+                                label={incomeAttribute['number']}
+                                name='number'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Input />
                             </Form.Item>
-                            <Form.Item label={incomeAttribute['arrivalDate']} name='arrivalDate'>
+                            <Form.Item
+                                label={incomeAttribute['arrivalDate']}
+                                name='arrivalDate'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <DatePicker />
                             </Form.Item>
-                            <Form.Item label={incomeAttribute['signDate']} name='signDate'>
+                            <Form.Item
+                                label={incomeAttribute['signDate']}
+                                name='signDate'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <DatePicker />
                             </Form.Item>
-                            <Form.Item label={incomeAttribute['signer']} name='signer'>
+                            <Form.Item
+                                label={incomeAttribute['signer']}
+                                name='signer'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Input />
                             </Form.Item>
                         </Col>
                         <Col span={12}>
-                            <Form.Item label={incomeAttribute['sendFrom']} name='sendFrom'>
+                            <Form.Item
+                                label={incomeAttribute['sendFrom']}
+                                name='sendFrom'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Input />
                             </Form.Item>
-                            <Form.Item label={incomeAttribute['sendTo']} name='sendTo'>
+                            <Form.Item
+                                label={incomeAttribute['sendTo']}
+                                name='sendTo'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Input />
                             </Form.Item>
                             <Form.Item label={incomeAttribute['thematic']} name='thematic'>
                                 <Input />
                             </Form.Item>
-                            <Form.Item label={incomeAttribute['category']} name='category'>
+                            <Form.Item
+                                label={incomeAttribute['category']}
+                                name='category'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Select
                                     options={[
                                         {
@@ -141,7 +222,16 @@ const UploadIncomeModal = ({
                                     ]}
                                 />
                             </Form.Item>
-                            <Form.Item label={incomeAttribute['abstract']} name='abstract'>
+                            <Form.Item
+                                label={incomeAttribute['abstract']}
+                                name='abstract'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
                                 <Input />
                             </Form.Item>
                         </Col>

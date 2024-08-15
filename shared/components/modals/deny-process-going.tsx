@@ -52,7 +52,16 @@ const DenyProcessGoing = ({
                     style={{ maxWidth: 1200 }}
                     onFinish={handleFinish}
                 >
-                    <Form.Item label='Lý do trả lại' name='returnReason'>
+                    <Form.Item
+                        label='Lý do trả lại'
+                        name='returnReason'
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Không để trống trường này'
+                            }
+                        ]}
+                    >
                         <Input ></Input>
                     </Form.Item>
                 </Form>

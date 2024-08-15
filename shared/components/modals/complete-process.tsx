@@ -79,7 +79,7 @@ const CompleteProcess = ({
                             <Button icon={<UploadOutlined />}>Upload</Button>
                         </Upload>
                     </Form.Item>
-                    <Form.Item label='Trích yếu dự thảo văn bản đi' name='abstract'>
+                    <Form.Item label='Trích yếu dự thảo văn bản đi' name='abstractDraft'>
                         <Input />
                     </Form.Item>
                 </Form>

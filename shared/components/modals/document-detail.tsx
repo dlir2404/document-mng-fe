@@ -101,7 +101,7 @@ const DocumentDetail = ({
                                 <Input disabled value={document?.mainProcessor?.username}></Input>
                             </Form.Item>
                             <Form.Item label={incomeAttribute['collaborators']}>
-                                <Input disabled value={document?.collaborators}></Input>
+                                <Input disabled value={document?.collaborators?.map((collaborator: any) => collaborator.username).join(',')}></Input>
                             </Form.Item>
                             <Form.Item label={incomeAttribute['category']}>
                                 <Input disabled value={document?.category}></Input>
@@ -206,7 +206,7 @@ const DocumentDetail = ({
                                 <Input disabled value={document?.mainProcessor?.username}></Input>
                             </Form.Item>
                             <Form.Item label={goingAttribute['collaborators']}>
-                                <Input disabled value={document?.collaborators}></Input>
+                                <Input disabled value={document?.collaborators?.map((collaborator: any) => collaborator.username).join(',')}></Input>
                             </Form.Item>
                             <Form.Item label={goingAttribute['thematic']}>
                                 <Input disabled value={document?.thematic}></Input>

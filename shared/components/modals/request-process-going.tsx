@@ -5,7 +5,7 @@ import { useForm } from "antd/es/form/Form";
 import { useAppContext } from "@/app/app-provider";
 import { useGetListSpecialist } from "../../services/user";
 import { useGetListRoom } from "../../services/room";
-import { useRequestProcessGoing } from "../../services/document";
+import { useGetLastTicket, useRequestProcessGoing } from "../../services/document";
 
 const RequestProcessGoing = ({
     isOpen,
@@ -37,6 +37,7 @@ const RequestProcessGoing = ({
 
     const { data: rooms } = useGetListRoom()
     const { data: specialists } = useGetListSpecialist(room)
+    const { data: lastTicket } = useGetLastTicket('process', 'going')
 
     useEffect(() => {
         if (!room) {
@@ -86,7 +87,7 @@ const RequestProcessGoing = ({
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item label='Số phiếu yêu cầu giải quyết văn bản đến'>
-                                <Input value={1} disabled></Input>
+                                <Input value={lastTicket?.id + 1 || 1} disabled></Input>
                             </Form.Item>
                             <Form.Item
                                 label='Hạn giải quyết'

@@ -262,6 +262,24 @@ export const useRequestProcessIncome = (okFn?: Function, errFn?: Function) => {
     })
 }
 
+export const useGetLastTicket = (type: string, docType: string) => {
+    return useQuery({
+        queryKey: ['last_ticket', type, docType],
+        queryFn: async () => {
+            let endpoint = BASE_URL || process.env.NEXT_PUBLIC_API || 'http://localhost:3000/api'
+            endpoint += `/${docType}/last-ticket`
+
+            const result = await axios.get(endpoint, {
+                params: {
+                    type: type
+                }
+            })
+
+            return result.data
+        }
+    })
+}
+
 export const useRequestProcessGoing = (okFn?: Function, errFn?: Function) => {
     return useMutation({
         mutationFn: async (body: IRequestProcessGoing) => {

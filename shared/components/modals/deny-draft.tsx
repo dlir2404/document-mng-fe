@@ -5,7 +5,7 @@ import { useForm } from "antd/es/form/Form";
 import { useAppContext } from "@/app/app-provider";
 import { useGetListSpecialist } from "../../services/user";
 import { useGetListRoom } from "../../services/room";
-import { useDenyDraft } from "../../services/document";
+import { useDenyDraft, useGetLastTicket } from "../../services/document";
 
 const DenyDraft = ({
     isOpen,
@@ -37,6 +37,7 @@ const DenyDraft = ({
 
     const { data: rooms } = useGetListRoom()
     const { data: specialists } = useGetListSpecialist(room)
+    const { data: lastTicket } = useGetLastTicket('command-draft', 'income')
 
     useEffect(() => {
         if (!room) {
@@ -86,7 +87,7 @@ const DenyDraft = ({
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item label='Số phiếu yêu cầu xử lý văn bản đến'>
-                                <Input value={1} disabled></Input>
+                                <Input value={lastTicket?.id + 1 || 1} disabled></Input>
                             </Form.Item>
                             <Form.Item
                                 label='Hạn xử lý'

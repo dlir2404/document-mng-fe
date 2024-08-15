@@ -5,7 +5,7 @@ import { useForm } from "antd/es/form/Form";
 import { useAppContext } from "@/app/app-provider";
 import { useGetListSpecialist } from "../../services/user";
 import { useGetListRoom } from "../../services/room";
-import { useRequestProcessIncome } from "../../services/document";
+import { useGetLastTicket, useRequestProcessIncome } from "../../services/document";
 
 const RequestProcessIncome = ({
     isOpen,
@@ -37,6 +37,7 @@ const RequestProcessIncome = ({
 
     const { data: rooms } = useGetListRoom()
     const { data: specialists } = useGetListSpecialist(room)
+    const { data: lastTicket } = useGetLastTicket('command', 'income')
 
     useEffect(() => {
         if (!room) {
@@ -77,7 +78,7 @@ const RequestProcessIncome = ({
     }
     return (
         <>
-            <Modal confirmLoading={isConfirmLoading} width={800} closable={true} title="Phiêu chỉ đạo xử lý văn bản đến" open={isOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal confirmLoading={isConfirmLoading} width={800} closable={true} title="Phiếu chỉ đạo xử lý văn bản đến" open={isOpen} onOk={handleOk} onCancel={handleCancel}>
                 <Form
                     form={form}
                     layout="vertical"
@@ -87,7 +88,7 @@ const RequestProcessIncome = ({
                     <Row gutter={16}>
                         <Col span={12}>
                             <Form.Item label='Số phiếu chỉ đạo xử lý văn bản đến'>
-                                <Input value={1} disabled></Input>
+                                <Input value={lastTicket?.id + 1 || 1} disabled></Input>
                             </Form.Item>
                             <Form.Item
                                 label='Hạn xử lý'

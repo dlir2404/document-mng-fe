@@ -77,6 +77,14 @@ export interface IDenyDraft {
     token?: string;
 }
 
+export interface IDenyGoingDocument {
+    specialistId?: number;
+    documentId?: number;
+    processDirection?: string;
+    deadline?: string;
+    token?: string;
+}
+
 export interface IAcceptProcessIncome {
     documentId?: number;
     token?: string;
@@ -316,6 +324,30 @@ export const useDenyDraft = (okFn?: Function, errFn?: Function) => {
         onSuccess: (data: any) => {
             notification.success({
                 message: 'Dự thảo không được phê duyệt. Yêu cầu xử lý mới đã được tạo'
+            })
+            okFn && okFn(data)
+        },
+        onError: (error: any) => {
+            errFn && errFn()
+            notification.error({
+                message: error.response.data.message || 'Có lỗi xảy ra'
+            })
+        }
+    })
+}
+
+export const useDenyGoingDocument = (okFn?: Function, errFn?: Function) => {
+    return useMutation({
+        mutationFn: async (body: IDenyGoingDocument) => {
+            return await axios.post(BASE_URL + '/going/document/deny', body, {
+                headers: {
+                    "Authorization": 'Bearer ' + body.token
+                }
+            })
+        },
+        onSuccess: (data: any) => {
+            notification.success({
+                message: 'Đã yêu cầu sửa đổi'
             })
             okFn && okFn(data)
         },

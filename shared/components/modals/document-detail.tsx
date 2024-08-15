@@ -50,6 +50,8 @@ const DocumentDetail = ({
         return 'Số phiếu chỉ đạo xử lý văn bản đến'
     }
 
+    console.log(data)
+
     return (
         <>
             <Modal
@@ -237,6 +239,42 @@ const DocumentDetail = ({
                         </Col>
                     </Row>
                 </Form>
+                {data && (data.commandTicket || data.draftTicket) && (
+                    <>
+                        <Form
+                            layout="vertical"
+                            style={{ maxWidth: 1200 }}
+                        >
+                            <Row className="justify-center my-4">
+                                <div className="font-bold">{handleShowTicketTitle()}</div>
+                            </Row>
+                            <Row gutter={16}>
+                                <Col span={12}>
+                                    <Form.Item label={handleShowTicketLabel()}>
+                                        <Input disabled value={data?.draftTicket ? data?.draftTicket.id : data.commandTicket?.id || ''}></Input>
+                                    </Form.Item>
+                                </Col>
+                                <Col span={12}>
+                                    <Form.Item label={incomeAttribute['deadline']}>
+                                        <Input disabled value={formatDate(data?.draftTicket?.deadline || data?.commandTicket?.deadline)}></Input>
+                                    </Form.Item>
+                                </Col>
+                                <Col span={24}>
+                                    <Form.Item label={'Nội dung phương hướng xử lý'}>
+                                        <Input disabled value={data?.draftTicket ? data?.draftTicket.processDirection : data.commandTicket?.processDirection || ''}></Input>
+                                    </Form.Item>
+                                </Col>
+                                {(data?.draftTicket?.returnReason || data?.commandTicket?.returnReason) && (
+                                    <Col span={24}>
+                                        <Form.Item label={'Lý do trả lại'}>
+                                            <Input disabled value={data?.draftTicket?.returnReason || data?.commandTicket?.returnReason || ''}></Input>
+                                        </Form.Item>
+                                    </Col>
+                                )}
+                            </Row>
+                        </Form>
+                    </>
+                )}
             </Modal>
         </>
     )

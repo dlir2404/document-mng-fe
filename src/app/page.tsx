@@ -30,6 +30,7 @@ import PublishGoingDocument from "../../shared/components/modals/publish-going-d
 import DocumentDetail from "../../shared/components/modals/document-detail";
 import { debounce } from "lodash"
 import { SearchOutlined } from "@ant-design/icons";
+import DenyGoingDocument from "../../shared/components/modals/deny-going-document";
 
 const exchangeRoleName = (role: number): string => {
   switch (role) {
@@ -65,6 +66,7 @@ export default function Home() {
   const [isDenyProccessGoing, setIsDenyProccessGoing] = useState(false)
   const [isCompleteProccessGoing, setIsCompleteProccessGoing] = useState(false)
   const [isAcceptGoing, setIsAcceptGoing] = useState(false)
+  const [isDenyGoingDocument, setIsDenyGoingDocument] = useState(false)
   const [isPublishGoing, setIsPublishGoing] = useState(false)
 
   const [isUploadBtn, setIsUploadBtn] = useState(true)
@@ -205,6 +207,7 @@ export default function Home() {
                 <Button
                   onClick={() => {
                     setDocument(record)
+                    setIsDenyGoingDocument(true)
                   }}
                 >Không phê duyệt</Button>
               </div>
@@ -555,6 +558,7 @@ export default function Home() {
       <DenyProcessGoing documentId={document?.id} onOk={() => { refetch() }} isOpen={isDenyProccessGoing} setIsOpen={setIsDenyProccessGoing}></DenyProcessGoing>
       <CompleteProcessGoing documentId={document?.id} onOk={() => { refetch() }} isOpen={isCompleteProccessGoing} setIsOpen={setIsCompleteProccessGoing}></CompleteProcessGoing>
       <AcceptGoingDocument documentId={document?.id} onOk={() => { refetch() }} isOpen={isAcceptGoing} setIsOpen={setIsAcceptGoing}></AcceptGoingDocument>
+      <DenyGoingDocument documentId={document?.id} onOk={() => { refetch() }} isOpen={isDenyGoingDocument} setIsOpen={setIsDenyGoingDocument}></DenyGoingDocument>
       <PublishGoingDocument documentId={document?.id} onOk={() => { refetch() }} isOpen={isPublishGoing} setIsOpen={setIsPublishGoing}></PublishGoingDocument>
     </>
   );

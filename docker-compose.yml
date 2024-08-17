@@ -12,24 +12,8 @@ services:
     ports:
       - "3306:3306"
 
-  app:
-    image: thaihoang1409/document-management-app:latest
-    environment:
-      PORT: 3001
-      JWT_SECRET: thaihoangtest
-      DATABASE_HOST: db
-      DATABASE_PORT: 3306
-      DATABASE_USER: root
-      DATABASE_PASS: 12345678
-      DATABASE_NAME: document-management
-    ports:
-      - "3001:3001"
-    depends_on:
-      - db
-    command: sh -c "npm run build && ./wait-for-it.sh db:3306 -- npm run start:prod"
-
   fe:
-    image: thaihoang1409/document-management-fe:latest
+    build: .
     environment:
       NEXT_PUBLIC_API: http://localhost:3001/api
       NEXT_PUBLIC_STATIC: http://localhost:3001/
@@ -37,7 +21,6 @@ services:
       - "3000:3000"
     depends_on:
       - db
-    command: sh -c "npm run build && ./wait-for-it.sh db:3306 -- npm run start"
 
 volumes:
   db_data:

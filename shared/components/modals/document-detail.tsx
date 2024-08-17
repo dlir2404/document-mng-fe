@@ -101,13 +101,13 @@ const DocumentDetail = ({
                         </Col>
                         <Col span={12}>
                             <Form.Item label={incomeAttribute['leader']}>
-                                <Input disabled value={document?.leader?.username}></Input>
+                                <Input disabled value={document?.leader?.fullName}></Input>
                             </Form.Item>
                             <Form.Item label={incomeAttribute['mainProcessor']}>
-                                <Input disabled value={document?.mainProcessor?.username}></Input>
+                                <Input disabled value={document?.mainProcessor?.fullName}></Input>
                             </Form.Item>
                             <Form.Item label={incomeAttribute['collaborators']}>
-                                <Input disabled value={document?.collaborators?.map((collaborator: any) => collaborator.username).join(',')}></Input>
+                                <Input disabled value={document?.collaborators?.map((collaborator: any) => collaborator.fullName).join(',')}></Input>
                             </Form.Item>
                             <Form.Item label={incomeAttribute['category']}>
                                 <Input disabled value={document?.category}></Input>
@@ -209,10 +209,10 @@ const DocumentDetail = ({
                         </Col>
                         <Col span={12}>
                             <Form.Item label={goingAttribute['mainProcessor']}>
-                                <Input disabled value={document?.mainProcessor?.username}></Input>
+                                <Input disabled value={document?.mainProcessor?.fullName}></Input>
                             </Form.Item>
                             <Form.Item label={goingAttribute['collaborators']}>
-                                <Input disabled value={document?.collaborators?.map((collaborator: any) => collaborator.username).join(',')}></Input>
+                                <Input disabled value={document?.collaborators?.map((collaborator: any) => collaborator.fullName).join(',')}></Input>
                             </Form.Item>
                             <Form.Item label={goingAttribute['thematic']}>
                                 <Input disabled value={document?.thematic}></Input>

@@ -97,7 +97,7 @@ export default function MainLayout({
                     style={{ flex: 1, minWidth: 0 }}
                 />
                 {appContext.user && (
-                    <Popover placement="bottomRight" content={renderAvatarContent} title={appContext.user.username} trigger="click">
+                    <Popover placement="bottomRight" content={renderAvatarContent} title={appContext.user.fullName} trigger="click">
                         <Avatar size="large" icon={<UserOutlined />} />
                     </Popover>
                 )}

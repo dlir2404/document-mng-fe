@@ -324,13 +324,13 @@ export default function Home() {
       title: incomeAttribute['mainProcessor'],
       dataIndex: 'mainProcessor',
       key: 'mainProcessor',
-      render: (value: any) => <p>{value?.username}</p>
+      render: (value: any) => <p>{value?.fullName}</p>
     },
     {
       title: 'Phối hợp xử lý',
       dataIndex: 'collaborators',
       key: 'collaborators',
-      render: (values: any[]) => <p>{values.map((collab) => collab.username).join(',')}</p>
+      render: (values: any[]) => <p>{values.map((collab) => collab.fullName).join(',')}</p>
     },
     {
       title: incomeAttribute['deadline'],
@@ -432,13 +432,13 @@ export default function Home() {
       title: goingAttribute['mainProcessor'],
       dataIndex: 'mainProcessor',
       key: 'mainProcessor',
-      render: (value: any) => <p>{value?.username}</p>
+      render: (value: any) => <p>{value?.fullName}</p>
     },
     {
       title: goingAttribute['collaborators'],
       dataIndex: 'collaborators',
       key: 'collaborators',
-      render: (values: any[]) => <p>{values.map((collab) => collab.username).join(',')}</p>
+      render: (values: any[]) => <p>{values.map((collab) => collab.fullName).join(',')}</p>
     },
     {
       title: goingAttribute['deadline'],

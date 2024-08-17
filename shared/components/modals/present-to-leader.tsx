@@ -72,7 +72,7 @@ const PresentToLeaderModal = ({
                                 <Select
                                     options={data?.data?.rows.map((row: any) => {
                                         return {
-                                            label: row.username,
+                                            label: row.fullName,
                                             value: row.id
                                         }
                                     }) || []}

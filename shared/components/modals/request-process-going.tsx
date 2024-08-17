@@ -45,7 +45,7 @@ const RequestProcessGoing = ({
         } else {
             setSpecialistOptions(specialists?.data?.rows.map((specialist: any) => {
                 return {
-                    label: specialist.username,
+                    label: specialist.fullName,
                     value: specialist.id
                 }
             }) || [])

@@ -8,6 +8,7 @@ import { ItemType, MenuItemType } from "antd/es/menu/interface";
 import { createContext, useContext, useState } from "react";
 import { CookieKeys } from "../../constants/cookie";
 import { useRouter } from "next/navigation";
+import UserDetail from "../modals/user-detail";
 
 const TabsContext = createContext<{
     tabKey: string
@@ -29,6 +30,7 @@ export default function MainLayout({
 }>) {
     // getMe()
     const [tabKey, setTabKey] = useState<string>('income-document')
+    const [userDetail, setUserDetail] = useState(false)
     const appContext = useAppContext()
     const router = useRouter()
 
@@ -56,6 +58,13 @@ export default function MainLayout({
                 className="w-full"
                 mode="inline"
                 items={[
+                    {
+                        key: 'user-detail',
+                        label: 'Thông tin cá nhân',
+                        onClick: () => {
+                            setUserDetail(true)
+                        }
+                    },
                     {
                         key: 'logout',
                         label: 'Đăng xuất',
@@ -117,6 +126,9 @@ export default function MainLayout({
                         }}
                     >
                         {children}
+                        {userDetail && (
+                            <UserDetail isOpen={userDetail} setIsOpen={setUserDetail}/>
+                        )}
                     </TabsContext.Provider>
                 </div>
             </Content>

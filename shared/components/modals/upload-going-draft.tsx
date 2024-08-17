@@ -6,6 +6,7 @@ import { incomeAttribute } from "../../constants/attribute";
 import { useForm } from "antd/es/form/Form";
 import { useAppContext } from "@/app/app-provider";
 import { useUploadDocumentDraft } from "../../services/document";
+import { useGetUserByRole } from "../../services/user";
 
 const UploadGoingDraft = ({
     isOpen,
@@ -19,6 +20,7 @@ const UploadGoingDraft = ({
     const [form] = useForm()
     const [isConfirmLoading, setIsConfirmLoading] = useState(false)
     const appContext = useAppContext()
+    const { data } = useGetUserByRole(2)
 
     const handleCancel = () => {
         setIsOpen(false)
@@ -46,8 +48,6 @@ const UploadGoingDraft = ({
 
     const handleFinish = (values: any) => {
         values.file = values.file.file.originFileObj
-        values.arrivalDate = values.arrivalDate?.toISOString()
-        values.signDate = values.signDate?.toISOString()
 
         setIsConfirmLoading(true)
         upload.mutate({
@@ -88,6 +88,27 @@ const UploadGoingDraft = ({
                                     <Button icon={<UploadOutlined />}>Upload</Button>
                                 </Upload>
                             </Form.Item>
+                            {appContext?.user?.role === 3 && (
+                                <Form.Item
+                                label='Chọn lãnh đạo'
+                                name='leaderId'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Không để trống trường này'
+                                    }
+                                ]}
+                            >
+                                <Select
+                                    options={data?.data?.rows.map((row: any) => {
+                                        return {
+                                            label: row.fullName,
+                                            value: row.id
+                                        }
+                                    }) || []}
+                                />
+                            </Form.Item>
+                            )}
                         </Col>
                         <Col span={12}>
                             <Form.Item

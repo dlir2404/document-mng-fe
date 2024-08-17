@@ -33,6 +33,7 @@ export interface IUploadDocumentDraftBody {
     sendFrom?: string;
     category?: string;
     abstract?: string;
+    leaderId?: number;
     token?: string;
 }
 

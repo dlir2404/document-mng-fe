@@ -555,8 +555,10 @@ export default function Home() {
           tabsContext.tabKey === 'report' && (
             <DatePicker.RangePicker 
               onChange={(e) => { 
-                setFrom(e[0]?.toISOString())
-                setTo(e[1]?.toISOString())
+                if (e) {
+                  setFrom(e[0]?.toISOString())
+                  setTo(e[1]?.toISOString())
+                }
               }} 
               className='mb-4' 
             />

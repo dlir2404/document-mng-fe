@@ -12,6 +12,7 @@ export interface IDocumentParams {
     to?: string;
     query?: string
     reportType?: string;
+    token?: string;
 }
 
 export interface IUploadIncomeBody {
@@ -143,7 +144,7 @@ export interface IDenyProcessGoing {
     token?: string;
 }
 
-export const useGetListDocument = (params: IDocumentParams, token: string) => {
+export const useGetListDocument = (params: IDocumentParams) => {
     return useQuery({
         queryKey: ['document', params],
         queryFn: async () => {
@@ -156,7 +157,7 @@ export const useGetListDocument = (params: IDocumentParams, token: string) => {
 
             const result = await axios.get(endpoint, {
                 headers: {
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + params.token
                 },
                 params: {
                     page: params.page || 1,

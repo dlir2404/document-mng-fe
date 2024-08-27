@@ -76,6 +76,8 @@ export default function Home() {
   const [query, setQuery] = useState()
   const [page, setPage] = useState<number | undefined>(1)
   const [reportType, setReportType] = useState<string | undefined>()
+  const [from, setFrom] = useState<string | undefined>()
+  const [to, setTo] = useState<string | undefined>()
 
   useGetProfile(appContext.token, (user: any) => {
     appContext.setUser(user)
@@ -92,7 +94,7 @@ export default function Home() {
     } else {
       setIsUploadBtn(true)
     }
-    setStatus(undefined)
+    setStatus(tabsContext.tabKey !== 'report' ? status : OPTIONS.LEADER.REPORT[0].value)
   }, [appContext.user, tabsContext.tabKey])
 
   const handleChangeTab = (event: any) => {
@@ -100,7 +102,7 @@ export default function Home() {
       setStatus(event.target.value)
       setReportType(undefined)
     } else {
-      if (event.target.value == ['APPROVED_DRAFT'] || event.target.value == ['WAITING_FOR_PRESENTING_TO_LEADER', 'PRESENTED_TO_LEADER', 'ASSIGNED_FOR_PROCESS', 'PROCESSING', 'WAITING_FOR_APPROVING_DRAFT']) {
+      if (event.target.value.includes('income')) {
         setReportType('income')
       } else {
         setReportType('going')
@@ -296,8 +298,11 @@ export default function Home() {
     query: query,
     page: page || 1,
     pageSize: 10,
-    reportType: reportType
-  }, appContext.token)
+    reportType: reportType,
+    token: appContext.token,
+    from: tabsContext.tabKey === 'report' ? from : undefined,
+    to: tabsContext.tabKey === 'report' ? to : undefined,
+  })
 
   const columnsIncome = [
     {
@@ -548,18 +553,24 @@ export default function Home() {
         </div>
         {
           tabsContext.tabKey === 'report' && (
-            <DatePicker.RangePicker className='mb-4' />
+            <DatePicker.RangePicker 
+              onChange={(e) => { 
+                setFrom(e[0]?.toISOString())
+                setTo(e[1]?.toISOString())
+              }} 
+              className='mb-4' 
+            />
           )
         }
         <Table
           loading={isLoading}
-          columns={tabsContext.tabKey === 'income-document' ? 
-            columnsIncome : 
-            tabsContext.tabKey === 'going-document' ? 
-            columnsGoing : 
-            tabsContext.tabKey === 'report' ? 
-            (reportType === 'income' ? columnsIncome : reportType === 'going' ? columnsGoing : []) : 
-            []
+          columns={tabsContext.tabKey === 'income-document' ?
+            columnsIncome :
+            tabsContext.tabKey === 'going-document' ?
+              columnsGoing :
+              tabsContext.tabKey === 'report' ?
+                (reportType === 'income' ? columnsIncome : reportType === 'going' ? columnsGoing : []) :
+                []
           }
           bordered
           onRow={(record) => {

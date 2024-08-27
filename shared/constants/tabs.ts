@@ -47,19 +47,19 @@ export const OPTIONS = {
         REPORT: [
             {
                 label: 'Văn bản đến đã hoàn thành',
-                value: ['APPROVED_DRAFT'],
+                value: ['APPROVED_DRAFT', 'income'],
             },
             {
                 label: 'Văn bản đến chưa hoàn thành',
-                values: ['WAITING_FOR_PRESENTING_TO_LEADER', 'PRESENTED_TO_LEADER', 'ASSIGNED_FOR_PROCESS', 'PROCESSING', 'WAITING_FOR_APPROVING_DRAFT'],
+                value: ['WAITING_FOR_PRESENTING_TO_LEADER', 'PRESENTED_TO_LEADER', 'ASSIGNED_FOR_PROCESS', 'PROCESSING', 'WAITING_FOR_APPROVING_DRAFT', 'income'],
             },
             {
                 label: 'Văn bản đi đã hoàn thành',
-                value: ['APPROVED', 'PUBLISHED'],
+                value: ['APPROVED', 'PUBLISHED', 'going'],
             },
             {
                 label: 'Văn bản đi chưa hoàn thành',
-                value: ['WAITING_FOR_ASSIGNMENT', 'ASSIGNMENT_FOR_PROCESS', 'PROCESSING', 'WAITING_FOR_APPROVE'],
+                value: ['WAITING_FOR_ASSIGNMENT', 'ASSIGNMENT_FOR_PROCESS', 'PROCESSING', 'WAITING_FOR_APPROVE', 'going'],
             }
         ]
     },

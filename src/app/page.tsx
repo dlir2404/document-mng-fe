@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useAppContext } from "./app-provider";
 import { useRouter } from "next/navigation";
-import { Button, Input, notification, Radio, Table, Tag } from "antd";
+import { Button, DatePicker, Input, notification, Radio, Table, Tag } from "antd";
 import { useTabsContext } from "../../shared/components/layouts/MainLayout";
 import { DOCUMENT_STATUS, OPTIONS } from "../../shared/constants/tabs";
 import { useGetListDocument } from "../../shared/services/document";
@@ -75,6 +75,7 @@ export default function Home() {
   const [status, setStatus] = useState<string[] | undefined>()
   const [query, setQuery] = useState()
   const [page, setPage] = useState<number | undefined>(1)
+  const [reportType, setReportType] = useState<string | undefined>()
 
   useGetProfile(appContext.token, (user: any) => {
     appContext.setUser(user)
@@ -86,7 +87,7 @@ export default function Home() {
   })
 
   useEffect(() => {
-    if ([2, 3].includes(appContext.user?.role) && tabsContext.tabKey === 'income-document') {
+    if ([2, 3].includes(appContext.user?.role) && tabsContext.tabKey === 'income-document' || tabsContext.tabKey === 'report') {
       setIsUploadBtn(false)
     } else {
       setIsUploadBtn(true)
@@ -95,7 +96,17 @@ export default function Home() {
   }, [appContext.user, tabsContext.tabKey])
 
   const handleChangeTab = (event: any) => {
-    setStatus(event.target.value)
+    if (tabsContext.tabKey !== 'report') {
+      setStatus(event.target.value)
+      setReportType(undefined)
+    } else {
+      if (event.target.value == ['APPROVED_DRAFT'] || event.target.value == ['WAITING_FOR_PRESENTING_TO_LEADER', 'PRESENTED_TO_LEADER', 'ASSIGNED_FOR_PROCESS', 'PROCESSING', 'WAITING_FOR_APPROVING_DRAFT']) {
+        setReportType('income')
+      } else {
+        setReportType('going')
+      }
+      setStatus(event.target.value)
+    }
   }
 
   const handleShowAction = (status: string, role: number, record: any) => {
@@ -269,7 +280,7 @@ export default function Home() {
   let options: any[] = []
   switch (appContext.user?.role) {
     case 2:
-      options = OPTIONS['LEADER'][tabsContext.tabKey === 'income-document' ? "INCOME" : "GOING"]
+      options = OPTIONS['LEADER'][tabsContext.tabKey === 'income-document' ? "INCOME" : (tabsContext.tabKey === 'going-document' ? "GOING" : "REPORT")]
       break;
     case 3:
       options = OPTIONS['SPECIALIST'][tabsContext.tabKey === 'income-document' ? "INCOME" : "GOING"]
@@ -284,7 +295,8 @@ export default function Home() {
     status: status,
     query: query,
     page: page || 1,
-    pageSize: 10
+    pageSize: 10,
+    reportType: reportType
   }, appContext.token)
 
   const columnsIncome = [
@@ -534,9 +546,21 @@ export default function Home() {
             allowClear
             prefix={<SearchOutlined />} />
         </div>
+        {
+          tabsContext.tabKey === 'report' && (
+            <DatePicker.RangePicker className='mb-4' />
+          )
+        }
         <Table
           loading={isLoading}
-          columns={tabsContext.tabKey === 'income-document' ? columnsIncome : tabsContext.tabKey === 'going-document' ? columnsGoing : []}
+          columns={tabsContext.tabKey === 'income-document' ? 
+            columnsIncome : 
+            tabsContext.tabKey === 'going-document' ? 
+            columnsGoing : 
+            tabsContext.tabKey === 'report' ? 
+            (reportType === 'income' ? columnsIncome : reportType === 'going' ? columnsGoing : []) : 
+            []
+          }
           bordered
           onRow={(record) => {
             return {

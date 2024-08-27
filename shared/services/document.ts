@@ -11,6 +11,7 @@ export interface IDocumentParams {
     from?: string;
     to?: string;
     query?: string
+    reportType?: string;
 }
 
 export interface IUploadIncomeBody {
@@ -147,7 +148,11 @@ export const useGetListDocument = (params: IDocumentParams, token: string) => {
         queryKey: ['document', params],
         queryFn: async () => {
             let endpoint = BASE_URL || process.env.NEXT_PUBLIC_API || 'http://localhost:3000/api'
-            endpoint += params.type === 'income-document' ? '/income/all' : '/going/all'
+            if (!params.reportType) {
+                endpoint += params.type === 'income-document' ? '/income/all' : '/going/all'
+            } else {
+                endpoint += params.reportType === 'income' ? '/income/all' : '/going/all'
+            }
 
             const result = await axios.get(endpoint, {
                 headers: {

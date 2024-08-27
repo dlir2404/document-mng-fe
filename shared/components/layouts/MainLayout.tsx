@@ -48,7 +48,14 @@ export default function MainLayout({
         {
             key: 'report',
             label: 'Báo cáo',
-            onClick: () => {alert('Coming soon!!!!!!!!!!!')}
+            onClick: () => {
+                console.log(appContext.user.role)
+                if (appContext.user.role === 2) {
+                    setTabKey('report')
+                } else {
+                    alert('Comming soon')
+                }
+            }
         }
     ]
 

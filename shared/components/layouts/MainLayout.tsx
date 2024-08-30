@@ -79,6 +79,7 @@ export default function MainLayout({
                             router.push('/login')
                             appContext.setUser(null)
                             appContext.setToken('')
+                            setTabKey('income-document')
                             localStorage.removeItem(CookieKeys.accessToken)
                             notification.success({
                                 message: "Đăng xuất thành công"
@@ -134,7 +135,7 @@ export default function MainLayout({
                     >
                         {children}
                         {userDetail && (
-                            <UserDetail isOpen={userDetail} setIsOpen={setUserDetail}/>
+                            <UserDetail isOpen={userDetail} setIsOpen={setUserDetail} />
                         )}
                     </TabsContext.Provider>
                 </div>

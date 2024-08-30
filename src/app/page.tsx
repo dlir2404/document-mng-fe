@@ -94,7 +94,11 @@ export default function Home() {
     } else {
       setIsUploadBtn(true)
     }
-    setStatus(tabsContext.tabKey !== 'report' ? status : OPTIONS.LEADER.REPORT[0].value)
+    // setStatus(tabsContext.tabKey !== 'report' ? status : OPTIONS.LEADER.REPORT[0].value)
+    setStatus(tabsContext.tabKey === 'income-document' || tabsContext.tabKey === 'going-document' ? undefined : OPTIONS.LEADER.REPORT[0].value)
+    if (tabsContext.tabKey === 'report') {
+      setReportType('income')
+    }
   }, [appContext.user, tabsContext.tabKey])
 
   const handleChangeTab = (event: any) => {
@@ -360,7 +364,7 @@ export default function Home() {
       dataIndex: 'status',
       key: 'status',
       render: (value: string) => {
-        return <Tag color={DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].INCOME[value].color}>{DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].INCOME[value].status}</Tag>
+        return <Tag color={DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].INCOME[value]?.color}>{DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].INCOME[value]?.status}</Tag>
       }
     },
     {
@@ -455,7 +459,7 @@ export default function Home() {
       title: goingAttribute['collaborators'],
       dataIndex: 'collaborators',
       key: 'collaborators',
-      render: (values: any[]) => <p>{values.map((collab) => collab.fullName).join(',')}</p>
+      render: (values: any[]) => <p>{values.map((collab) => collab?.fullName).join(',')}</p>
     },
     {
       title: goingAttribute['deadline'],
@@ -468,7 +472,7 @@ export default function Home() {
       dataIndex: 'status',
       key: 'status',
       render: (value: string) => {
-        return <Tag color={DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].GOING[value].color}>{DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].GOING[value].status}</Tag>
+        return <Tag color={DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].GOING[value]?.color}>{DOCUMENT_STATUS[exchangeRoleName(appContext.user?.role)].GOING[value]?.status}</Tag>
       }
     },
     {
@@ -553,14 +557,14 @@ export default function Home() {
         </div>
         {
           tabsContext.tabKey === 'report' && (
-            <DatePicker.RangePicker 
-              onChange={(e) => { 
+            <DatePicker.RangePicker
+              onChange={(e) => {
                 if (e) {
                   setFrom(e[0]?.toISOString())
                   setTo(e[1]?.toISOString())
                 }
-              }} 
-              className='mb-4' 
+              }}
+              className='mb-4'
             />
           )
         }
